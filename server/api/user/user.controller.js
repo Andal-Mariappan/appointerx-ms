@@ -49,6 +49,7 @@ export function index(req, res) {
 				'last_name',
 				'email',
 				'role',
+				'npi',
 				'provider'
 			]
 		})
@@ -69,6 +70,7 @@ export function getPhysicians(req, res) {
 				'last_name',
 				'email',
 				'role',
+				'npi',
 				'provider'
 			]
 		})
@@ -88,6 +90,7 @@ export function getPhysiciansData(req, res) {
 				'first_name',
 				'last_name',
 				'email',
+				'npi',
 				'mobile'
 			],
 			include: [{
@@ -306,6 +309,7 @@ export function me(req, res, next) {
 				'last_name',
 				'email',
 				'role',
+				'npi',
 				'provider'
 			]
 		})

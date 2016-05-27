@@ -3,14 +3,14 @@
 (function () {
 
     function ShiftsResource($resource) {
-        return $resource('/api/settings/:id/:controller',
+        return $resource('/api/shifts/:id/:controller',
             {
                 id: '@_id'
             },
             {
                 'update': { method: 'PUT' },
                 'byDocId': {
-                    url: "/api/settings/doc/:docId",
+                    url: "/api/shifts/doc/:docId",
                     method: 'GET',
                     params: {
                         docId: '@docId'

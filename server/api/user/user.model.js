@@ -42,6 +42,7 @@ module.exports = function(sequelize, DataTypes) {
 			}
 		},
 		salt: DataTypes.STRING,
+		organization_name:DataTypes.STRING,
 		npi: DataTypes.STRING,
 		address1: DataTypes.STRING,
 		address2: DataTypes.STRING,
@@ -61,7 +62,7 @@ module.exports = function(sequelize, DataTypes) {
 			// Public profile information
 			profile: function() {
 				return {
-					'name': this.name,
+					'name': this.first_name + ' ' +this.last_name,
 					'role': this.role
 				};
 			},

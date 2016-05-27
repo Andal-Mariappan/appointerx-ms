@@ -57,6 +57,7 @@ User.sync()
 				first_name: 'physician',
 				last_name: 'doc1',
 				email: 'doc1@u.com',
+				organization_name:'ABC Inc',
 				'gender': 'male',
 				'mobile': '1234567890',
 				'age': 23,

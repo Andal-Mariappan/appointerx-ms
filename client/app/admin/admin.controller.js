@@ -3,10 +3,19 @@
 (function() {
 
 class AdminController {
-  constructor(User) {
-    // Use the User $resource to fetch all users
-    this.user = User.get();
-    console.log(this.user);
+  constructor(User, AppointmentService, Auth,socket) {
+    var vm = this;
+    vm.getCurrentUser = Auth.getCurrentUser;
+    vm.appointments = [];
+    vm.user = vm.getCurrentUser();
+    console.log(vm.getCurrentUser())
+    AppointmentService.byDocId.query({
+      docId: vm.getCurrentUser()._id
+    }).$promise.then(function(response) {
+      vm.appointments = response;
+      socket.syncUpdates('appointment', vm.appointments);
+    });
+    
   }
 
   delete(user) {

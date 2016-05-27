@@ -16,7 +16,7 @@ angular.module('eventx', [
 ])
   .config(function($urlRouterProvider, $locationProvider) {
     $urlRouterProvider
-      .otherwise('/dashboard');
+      .otherwise('/');
 
     $locationProvider.html5Mode(true);
   });
