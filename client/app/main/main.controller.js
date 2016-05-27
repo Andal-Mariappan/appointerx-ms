@@ -13,7 +13,9 @@
 			this.isLoggedIn = Auth.isLoggedIn;
 			this.isAdmin = Auth.isAdmin;
 			this.getCurrentUser = Auth.getCurrentUser;
-			
+			this.currentRole= this.getCurrentUser().role;
+			this.defaultView= "agendaDay"
+			this.currentDate= moment().format("dddd, MMMM Do YYYY");
 			this.onChange = function() {
 				this.physician = this.physician;
 				this.filter_Calendar();
@@ -23,8 +25,37 @@
 				getPhysician(this.physician);
 				getShifts(this.physician);
 			}
-
-
+			User.getPhysicians().$promise.then(response => {
+				this.physicians = response;
+				this.physician = response[0]._id;
+				getPhysician(this.physician);
+				getShifts(this.physician);
+				
+			});
+			
+			function getPhysician(physicianId)
+			{
+				AppointmentService.byDocId.query({
+					docId: physicianId
+				}).$promise.then(function(response) {
+					$scope.appointments = response;
+					
+					socket.syncUpdates('appointment', $scope.appointments);
+				});
+			}
+			
+			function getShifts(physicianId)
+			{
+				Shifts.byDocId({
+					docId: physicianId
+				}).$promise.then(function(shifts) {
+					// give pure json object instead of $resource
+					var newArr = JSON.parse(angular.toJson(shifts));
+					vm.slots  = _.map(newArr, function(o) { return _.omit(o, '_id'); });
+					socket.syncUpdates('settings', vm.slots);
+				});
+			}
+			
 			this.exportCSV = function() {
 				var dataToExport = [];
 				var dataX = [];
@@ -65,37 +96,6 @@
 				angular.element('#frmSubmit').attr('action', exportURL);
 				angular.element('#data').val(JSON.stringify(dataToExport));
 				angular.element('#frmSubmit').submit();
-			}
-
-			User.getPhysicians().$promise.then(response => {
-				this.physicians = response;
-				this.physician = response[0]._id;
-				getPhysician(this.physician);
-				getShifts(this.physician);
-				
-			});
-			
-			function getPhysician(physicianId)
-			{
-				AppointmentService.byDocId.query({
-					docId: physicianId
-				}).$promise.then(function(response) {
-					$scope.appointments = response;
-					
-					socket.syncUpdates('appointment', $scope.appointments);
-				});
-			}
-			
-			function getShifts(physicianId)
-			{
-				Shifts.byDocId({
-					docId: physicianId
-				}).$promise.then(function(shifts) {
-					// give pure json object instead of $resource
-					var newArr = JSON.parse(angular.toJson(shifts));
-					vm.slots  = _.map(newArr, function(o) { return _.omit(o, '_id'); });
-					socket.syncUpdates('settings', vm.slots);
-				});
 			}
 			
 		}

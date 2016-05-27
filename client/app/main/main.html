@@ -1,61 +1,56 @@
 <sidebar></sidebar>
 <!-- START CONTENT -->
 <section id="content">
-  <!--breadcrumbs start-->
-  <!--<div id="breadcrumbs-wrapper">
-    <div class="container">
-      <div class="row">
-        <div class="col s12 m12 l12">
-          <h5 class="breadcrumbs-title">Appointments - Agenda view</h5>
-          <ol class="breadcrumbs">
-            <li><a href="/">Calender</a></li>
-            <li class="active">Agenda</li>
-          </ol>
+  <div class="row">
+    <div class="input-field col s1 right">
+      <button type="button" class="btn-floating btn-small waves-effect waves-light" data-position="bottom" data-delay="50" data-tooltip="Export to csv"
+        ng-click="main.exportCSV()">
+          <i class="material-icons">file_download</i>
+        </button>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col s12">
+
+        <div id="flight-card" class="card">
+          <div class="card-header indigo darken-1">
+            <div class="row">
+              <div class="col s5">
+                <div class="card-title">
+                  <h4 class="flight-card-title">Appointments</h4>
+                  <p class="flight-card-date">{{main.currentDate}}</p>
+                </div>
+              </div>
+              <div class="col s7" ng-if="main.currentRole!=='physician'">
+                <select id="filter_physician" select-2-custom class="amber darken-2" ng-model='main.physician' ng-change="main.onChange()" aria-placeholder="select 3">
+                  <option selected disabled>Filter By Physician</option>
+                  <option ng-repeat="p in main.physicians track by p._id" value="{{p._id}}">{{p.first_name}} {{p.last_name}}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+          <div class="card-content-bg1">
+            <div class="card-content">
+              <div class="row">
+                <div class="col s12">
+                  <full-calendar id="dashboard-calendar-widget" slots="main.slots" data-events="appointments"></full-calendar>
+                </div>
+
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>-->
-  <!--breadcrumbs end-->
-  <!--start container-->
-  <div class="row">
-  
-    
-    
-    <!--<div class="input-field col s5 right">
-      <select id="filter_physician" ng-model="main.physician" material-select watch 
-      ng-change="main.onChange()">
-          <option value="" disabled selected>Choose your physician</option>
-          <option ng-repeat="p in main.physicians track by p._id" value="{{p._id}}">{{p.first_name}} {{p.last_name}}</option>
-          </select>
-      <label for="filter_physician">Filter by Physician</label> {{select.physician}}
-    </div>-->
-    
-     
-      <div class="input-field col s1 right">
-  <button type="button" class="btn-floating btn-small waves-effect waves-light" data-position="bottom" data-delay="50" data-tooltip="Export to csv"
-    ng-click="main.exportCSV()">
-        <i class="material-icons">file_download</i>
-      </button>
-</div>
-<div class="input-field col s5 left">
-  <select id="filter_physician" select-2-custom ng-model='main.physician' ng-change="main.onChange()" aria-placeholder="select 3">
-                <option selected disabled>Search by name</option>
-                <option ng-repeat="p in main.physicians track by p._id" value="{{p._id}}">{{p.first_name}} {{p.last_name}}
-                </option>
-                
-            </select>
-</div>
-<div class="input-field col s3">&nbsp;</div>
-    
-  </div>
-  <div class="container">
-    <full-calendar id="dashboard-calendar-widget" slots="main.slots" data-events="appointments"></full-calendar>
   </div>
   <form target="_blank" id="frmSubmit" style="display:none;" enctype='application/json' method="post">
-    
-    <input type='hidden', name='_csrf', value=token></input>
+
+    <input type='hidden' , name='_csrf' , value=token></input>
     <textarea id="data" name="data"></textarea>
-</form>
+  </form>
   <!--end container-->
 </section>
 <!-- END CONTENT -->

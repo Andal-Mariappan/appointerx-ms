@@ -40,18 +40,13 @@ angular.module('eventx')
             link: function (scope, element, attrs) {
                 element.colorpicker({
                     colorSelectors: {
-                    'red': '#f44336',
-                    'pink': '#e91e63',
                     'indigo': '#3f51b5',
-                    'cyan': '#00bcd4',
                     'green': '#4caf50',
-                    'yellow': '#ffeb3b',
                     'orange': '#ff9800',
-                    'grey': '#9e9e9e',
-                    'black': '#000000'
+                    'pink': '#9e9e9e'
                     },
                     format: 'hex',
-                    color:  'green',
+                    color:  'indigo',
                     align:'left',
                     input:element
                 });

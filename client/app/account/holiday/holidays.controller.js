@@ -3,6 +3,8 @@
 class HolidaysController {
   constructor(Auth, Holidays, $cookies, $location, $state, $scope, socket) {
     var vm = this;
+    vm.holiday={};
+    vm.holiday.className='red'
     this.errors = {};
     this.submitted = false;
     this.Auth = Auth;

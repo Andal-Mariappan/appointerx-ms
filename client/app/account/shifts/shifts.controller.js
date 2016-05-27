@@ -19,11 +19,11 @@ class ShiftsController {
 					docId: this.getCurrentUser()._id
 				}).$promise.then(function(shifts) {
 					vm.slots = shifts;
-					socket.syncUpdates('settings', vm.slots);
+					socket.syncUpdates('shifts', vm.slots);
 				});
 
     $scope.$on('$destroy', function () {
-      socket.unsyncUpdates("Settings");
+      socket.unsyncUpdates("shifts");
     });
   }
 
@@ -65,7 +65,7 @@ class ShiftsController {
       if (this.slot._id) {
         this.Shifts.update({ id: this.slot._id }, this.slot).$promise
           .then(() => {
-            Materialize.toast('Settings saved successfully.', 2000, '', function () { });            
+            Materialize.toast('Shifts saved successfully.', 2000, '', function () { });            
             this.slot = {};
           })
           .catch(() => {
@@ -77,7 +77,7 @@ class ShiftsController {
       {
         this.Shifts.save(this.slot)
         .$promise.then(() => {
-            Materialize.toast('Settings saved successfully.', 2000, '', function () { });
+            Materialize.toast('Shifts saved successfully.', 2000, '', function () { });
             this.slot = {};
           })
           .catch(() => {

@@ -310,7 +310,8 @@ export function me(req, res, next) {
 				'email',
 				'role',
 				'npi',
-				'provider'
+				'provider',
+				'createdAt'
 			]
 		})
 		.then(user => { // don't ever give out the password or salt

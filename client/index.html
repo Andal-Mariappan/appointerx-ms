@@ -105,15 +105,13 @@
     <div id="main" ng-if="$state.current.name !== 'login' 
     && $state.current.name !== 'signup'
     && $state.current.name !== 'forget'
-    && $state.current.name !== 'reset'
-    && $state.current.name !== 'dashboard'">
+    && $state.current.name !== 'reset'">
         <!--<sidebar></sidebar>--> 
       <div class="wrapper" ui-view=""></div>
     </div>
     
     <div  ng-if="$state.current.name === 'login'" style="margin-top: 2%;" ui-view=""></div>
     <div  ng-if="$state.current.name === 'signup'" style="margin-top: 2%;" ui-view=""></div>
-    <div  ng-if="$state.current.name === 'dashboard'" style="margin-top: 2%;" ui-view=""></div>
     <div  ng-if="$state.current.name === 'forget'" style="margin-top: 2%;" ui-view=""></div>
     <div  ng-if="$state.current.name === 'reset'" style="margin-top: 2%;" ui-view=""></div>
     
