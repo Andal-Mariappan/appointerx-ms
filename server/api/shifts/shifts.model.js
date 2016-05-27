@@ -1,7 +1,7 @@
 'use strict';
 
 export default function(sequelize, DataTypes) {
-  return sequelize.define('Settings', {
+  return sequelize.define('Shifts', {
     _id: {
       type: DataTypes.INTEGER,
       allowNull: false,

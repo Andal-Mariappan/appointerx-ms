@@ -18,7 +18,7 @@ var db = {
 
 // Insert models below
 
-db.Settings = db.sequelize.import('../api/settings/settings.model');
+db.Shifts = db.sequelize.import('../api/shifts/shifts.model');
 db.Appointment = db.sequelize.import('../api/appointment/appointment.model');
 db.User = db.sequelize.import('../api/user/user.model');
 
@@ -26,10 +26,10 @@ db.User = db.sequelize.import('../api/user/user.model');
 // Table Relationships will go here
 
 
-db.User.hasMany(db.Settings, {
+db.User.hasMany(db.Shifts, {
 	foreignKey: 'UserId'
 });
-db.Settings.belongsTo(db.User, {
+db.Shifts.belongsTo(db.User, {
 	as: 'settings',
 	foreignKey: 'UserId',
 	targetKey: '_id',

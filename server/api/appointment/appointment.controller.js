@@ -100,7 +100,31 @@ export function byDocID(req, res) {
 		.catch(handleError(res));
 }
 
-// Gets a list of Appointments by docId
+// Gets a list of Appointments by patientId
+export function byPatientID(req, res) {
+	Appointment.findAll({
+			where: {
+				patientId: req.params.patientId
+			},
+			include: [{
+				model: User,
+				as: 'creator',
+				attributes: ['first_name', '_id']
+			}, {
+				model: User,
+				as: 'Patient',
+				attributes: ['first_name', 'last_name', 'email', 'mobile', 'gender', '_id']
+			}, {
+				model: User,
+				as: 'Physician',
+				attributes: ['first_name', 'last_name', 'email', 'mobile', 'gender','npi','city','country', '_id']
+			}]
+		})
+		.then(respondWithResult(res))
+		.catch(handleError(res));
+}
+
+// Gets a list of holidays by docId
 export function holidays(req, res) {
 	// console.log(req.params.docId);
 	Appointment.findAll({

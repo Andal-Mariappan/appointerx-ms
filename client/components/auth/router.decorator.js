@@ -18,7 +18,7 @@ angular.module('eventx.auth')
 
           event.preventDefault();
           return Auth.isLoggedIn(_.noop).then(is => {
-            $state.go(is ? 'dashboard' : 'login');
+            $state.go(is ? 'main' : 'login');
           });
         });
       } else {

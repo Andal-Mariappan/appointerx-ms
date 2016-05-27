@@ -7,12 +7,12 @@ var newSettings;
 
 describe('Settings API:', function() {
 
-  describe('GET /api/settings', function() {
+  describe('GET /api/shifts', function() {
     var settingss;
 
     beforeEach(function(done) {
       request(app)
-        .get('/api/settings')
+        .get('/api/shifts')
         .expect(200)
         .expect('Content-Type', /json/)
         .end((err, res) => {
@@ -30,13 +30,13 @@ describe('Settings API:', function() {
 
   });
 
-  describe('POST /api/settings', function() {
+  describe('POST /api/shifts', function() {
     beforeEach(function(done) {
       request(app)
-        .post('/api/settings')
+        .post('/api/shifts')
         .send({
           name: 'New Settings',
-          info: 'This is the brand new settings!!!'
+          info: 'This is the brand new shifts!!!'
         })
         .expect(201)
         .expect('Content-Type', /json/)
@@ -49,50 +49,50 @@ describe('Settings API:', function() {
         });
     });
 
-    it('should respond with the newly created settings', function() {
+    it('should respond with the newly created shifts', function() {
       newSettings.name.should.equal('New Settings');
-      newSettings.info.should.equal('This is the brand new settings!!!');
+      newSettings.info.should.equal('This is the brand new shifts!!!');
     });
 
   });
 
-  describe('GET /api/settings/:id', function() {
-    var settings;
+  describe('GET /api/shifts/:id', function() {
+    var shifts;
 
     beforeEach(function(done) {
       request(app)
-        .get('/api/settings/' + newSettings._id)
+        .get('/api/shifts/' + newSettings._id)
         .expect(200)
         .expect('Content-Type', /json/)
         .end((err, res) => {
           if (err) {
             return done(err);
           }
-          settings = res.body;
+          shifts = res.body;
           done();
         });
     });
 
     afterEach(function() {
-      settings = {};
+      shifts = {};
     });
 
-    it('should respond with the requested settings', function() {
-      settings.name.should.equal('New Settings');
-      settings.info.should.equal('This is the brand new settings!!!');
+    it('should respond with the requested shifts', function() {
+      shifts.name.should.equal('New Settings');
+      shifts.info.should.equal('This is the brand new shifts!!!');
     });
 
   });
 
-  describe('PUT /api/settings/:id', function() {
+  describe('PUT /api/shifts/:id', function() {
     var updatedSettings;
 
     beforeEach(function(done) {
       request(app)
-        .put('/api/settings/' + newSettings._id)
+        .put('/api/shifts/' + newSettings._id)
         .send({
           name: 'Updated Settings',
-          info: 'This is the updated settings!!!'
+          info: 'This is the updated shifts!!!'
         })
         .expect(200)
         .expect('Content-Type', /json/)
@@ -109,18 +109,18 @@ describe('Settings API:', function() {
       updatedSettings = {};
     });
 
-    it('should respond with the updated settings', function() {
+    it('should respond with the updated shifts', function() {
       updatedSettings.name.should.equal('Updated Settings');
-      updatedSettings.info.should.equal('This is the updated settings!!!');
+      updatedSettings.info.should.equal('This is the updated shifts!!!');
     });
 
   });
 
-  describe('DELETE /api/settings/:id', function() {
+  describe('DELETE /api/shifts/:id', function() {
 
     it('should respond with 204 on successful removal', function(done) {
       request(app)
-        .delete('/api/settings/' + newSettings._id)
+        .delete('/api/shifts/' + newSettings._id)
         .expect(204)
         .end((err, res) => {
           if (err) {
@@ -130,9 +130,9 @@ describe('Settings API:', function() {
         });
     });
 
-    it('should respond with 404 when settings does not exist', function(done) {
+    it('should respond with 404 when shifts does not exist', function(done) {
       request(app)
-        .delete('/api/settings/' + newSettings._id)
+        .delete('/api/shifts/' + newSettings._id)
         .expect(404)
         .end((err, res) => {
           if (err) {

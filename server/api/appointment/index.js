@@ -8,6 +8,7 @@ var router = express.Router();
 router.get('/', controller.index);
 router.get('/:id', controller.show);
 router.get('/docs/:docId', controller.byDocID);
+router.get('/docs/:patientId', controller.byPatientID);
 router.get('/docs/:docId/holidays', controller.holidays);
 router.post('/', controller.create);
 router.put('/:id', controller.update);

@@ -1,16 +1,16 @@
 /**
  * Using Rails-like standard naming convention for endpoints.
- * GET     /api/settings              ->  index
- * POST    /api/settings              ->  create
- * GET     /api/settings/:id          ->  show
- * PUT     /api/settings/:id          ->  update
- * DELETE  /api/settings/:id          ->  destroy
+ * GET     /api/Shifts              ->  index
+ * POST    /api/Shifts              ->  create
+ * GET     /api/Shifts/:id          ->  show
+ * PUT     /api/Shifts/:id          ->  update
+ * DELETE  /api/Shifts/:id          ->  destroy
  */
 
 'use strict';
 
 import _ from 'lodash';
-import {Settings} from '../../sqldb';
+import {Shifts} from '../../sqldb';
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -60,14 +60,14 @@ function handleError(res, statusCode) {
 
 // Gets a list of Settingss
 export function index(req, res) {
-  Settings.findAll()
+  Shifts.findAll()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Gets a single Settings from the DB
+// Gets a single Shifts from the DB
 export function show(req, res) {
-  Settings.find({
+  Shifts.find({
     where: {
       _id: req.params.id
     }
@@ -77,9 +77,9 @@ export function show(req, res) {
     .catch(handleError(res));
 }
 
-// Gets a single Settings from the DB
+// Gets a single Shifts from the DB
 export function getShitsbyDocId(req, res) {
-  Settings.findAll({
+  Shifts.findAll({
     where: {
       UserId: req.params.docId
     },
@@ -96,19 +96,19 @@ export function getShitsbyDocId(req, res) {
 }
 
 
-// Creates a new Settings in the DB
+// Creates a new Shifts in the DB
 export function create(req, res) {
-  Settings.create(req.body)
+  Shifts.create(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
 
-// Updates an existing Settings in the DB
+// Updates an existing Shifts in the DB
 export function update(req, res) {
   if (req.body._id) {
     delete req.body._id;
   }
-  Settings.find({
+  Shifts.find({
     where: {
       _id: req.params.id
     }
@@ -119,9 +119,9 @@ export function update(req, res) {
     .catch(handleError(res));
 }
 
-// Deletes a Settings from the DB
+// Deletes a Shifts from the DB
 export function destroy(req, res) {
-  Settings.find({
+  Shifts.find({
     where: {
       _id: req.params.id
     }

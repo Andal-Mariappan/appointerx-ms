@@ -4,7 +4,7 @@ angular.module('eventx')
   .config(function($stateProvider) {
     $stateProvider
       .state('main', {
-        url: '/home',
+        url: '/',
         templateUrl: 'app/main/main.html',
         controller: 'MainController',
         controllerAs: 'main',

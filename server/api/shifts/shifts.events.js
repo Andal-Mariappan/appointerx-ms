@@ -1,15 +1,15 @@
 /**
- * Settings model events
+ * Shifts model events
  */
 
 'use strict';
 
 import {EventEmitter} from 'events';
-var Settings = require('../../sqldb').Settings;
-var SettingsEvents = new EventEmitter();
+var Shifts = require('../../sqldb').Shifts;
+var ShiftsEvents = new EventEmitter();
 
 // Set max event listeners (0 == unlimited)
-SettingsEvents.setMaxListeners(0);
+ShiftsEvents.setMaxListeners(0);
 
 // Model events
 var events = {
@@ -21,15 +21,15 @@ var events = {
 // Register the event emitter to the model events
 for (var e in events) {
   var event = events[e];
-  Settings.hook(e, emitEvent(event));
+  Shifts.hook(e, emitEvent(event));
 }
 
 function emitEvent(event) {
   return function(doc, options, done) {
-    SettingsEvents.emit(event + ':' + doc._id, doc);
-    SettingsEvents.emit(event, doc);
+    ShiftsEvents.emit(event + ':' + doc._id, doc);
+    ShiftsEvents.emit(event, doc);
     done(null);
   }
 }
 
-export default SettingsEvents;
+export default ShiftsEvents;
