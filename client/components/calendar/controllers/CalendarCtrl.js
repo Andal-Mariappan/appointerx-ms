@@ -5,6 +5,9 @@ angular.module('eventx').controller('CalendarCtrl', function ($scope, $log, $tim
 	$scope.userInfo = {}
 	$scope.getCurrentUser = Auth.getCurrentUser;
 	
+
+
+
 	$scope.getCurrentUser(function (user) {
 		$scope.currentUser = user;
 		$scope.userInfo.user = $scope.currentUser.name;

@@ -27,20 +27,15 @@ export default function(sequelize, DataTypes) {
 			isHoliday:{
 				type: DataTypes.BOOLEAN,
 				defaultValue: false
+			},
+			status:{
+				type:   DataTypes.ENUM,
+				values: ['Awaiting', 'Cancel', 'Done'],
+				defaultValue: 'Awaiting',
+				allowNull: false
 			}
 		}, {
 			hooks: {
-				// beforeCreate: function (event, fields, fn) {
-				//   console.log('====================called==================');
-				//   if (!event.start || !event.start.length || (event.start === null)) {
-				//     event.start = getDateTime(0);
-				//   }
-				//   if (!event.end || !event.end.length || (event.end === null)) {
-				//     event.end = getDateTime(1);
-				//   }
-				//   return fn(event);
-				// },
-
 				beforeCreate: function(event, options, fn) {
 					console.log('====================called==================');
 					console.log(event.start);

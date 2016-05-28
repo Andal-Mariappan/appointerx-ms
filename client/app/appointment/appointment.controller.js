@@ -1,23 +1,45 @@
 'use strict';
 
-angular.module('eventx')
-  .controller('AppointmentCtrl', function ($scope,$timeout, socket, CalendarEvent, Auth) {
-    var newEventDefaults = {
-      title: "Untitled Event",
-      description: "",
-      className: "",
-      icon: "",
-      allDay: false,
-      User: {}
-    };    
-    $scope.message = 'Hello';
-    $scope.getCurrentUser = Auth.getCurrentUser;
-    
-    $scope.getCurrentUser(function(user) {
-      $scope.currentUser = user;
-      $scope.userInfo.user = $scope.currentUser.name;
-      $scope.userInfo.createdDate = new Date();
-      newEventDefaults.creator = $scope.currentUser._id;
-    });
+(function () {
 
-  });
+  class AppointmentCtrl {
+
+    constructor($timeout,$rootScope,$state, socket, AppointmentService, Auth) {
+      var vm = this;
+      vm.appointments = [];
+      vm.isAdmin = Auth.isAdmin;
+      $rootScope.$state = $state;
+      vm.getCurrentUser = Auth.getCurrentUser;
+      vm.defaultMode='card'
+      vm.getCurrentUser(function (user) {
+        vm.currentUser = user;
+
+        // get app the appointments of logged users - physician/patient        
+        if (vm.currentUser.role === 'patient') {
+          AppointmentService.byPatientID.query({
+            patientId: vm.currentUser._id
+          }).$promise.then(function (response) {
+            console.log(response)
+            vm.appointments = response;
+            socket.syncUpdates('appointment', vm.appointments);
+          });
+        }
+        else if (vm.currentUser.role === 'physician') {
+          AppointmentService.byDocId.query({
+            docId: vm.currentUser._id
+          }).$promise.then(function (response) {
+            console.log(response)
+            vm.appointments = response;
+            socket.syncUpdates('appointment', vm.appointments);
+          });
+        }
+
+      });
+
+
+    }
+  }
+
+  angular.module('eventx')
+    .controller('AppointmentCtrl', AppointmentCtrl);
+})();

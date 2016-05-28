@@ -5,11 +5,14 @@ angular.module('eventx').directive('fullCalendar', function ($log, $timeout, $co
   var lnk = function (scope, element) {
     var $calendar = $("#calendar");
     var calendar = null;
+    scope.newEvent.icon = 'mdi-action-event';
+    
     $('.event-collapse').sideNav({
       menuWidth: 450,
       edge: 'right'
     });
 
+        
     $('.event-close-collapse').click(function () {
       $('.event-collapse').sideNav('hide');
     });
@@ -124,6 +127,7 @@ angular.module('eventx').directive('fullCalendar', function ($log, $timeout, $co
 
         select: function (start, end, allDay) {
           scope.newEvent = {};
+           scope.newEvent.icon = 'mdi-action-event';
           $timeout(function () {
             $('.event-collapse').sideNav('show');
             scope.focus = true;

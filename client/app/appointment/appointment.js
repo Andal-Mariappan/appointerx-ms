@@ -6,6 +6,7 @@ angular.module('eventx')
       .state('appointment', {
         url: '/appointment',
         templateUrl: 'app/appointment/appointment.html',
-        controller: 'AppointmentCtrl'
+        controller: 'AppointmentCtrl',
+        controllerAs: 'app',
       });
   });

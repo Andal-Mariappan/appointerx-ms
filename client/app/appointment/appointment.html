@@ -1,1 +1,70 @@
-<div>This is the appointment view.</div>
+<sidebar></sidebar>
+<style>
+.fade-in-out {
+  transition: 1s linear all;  
+  opacity: 1;
+}
+
+.fade-in-out.ng-hide {
+  opacity: 0;
+}
+</style>
+<div id="breadcrumbs-wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="col s9 left">
+        <h5 class="breadcrumbs-title">Appointment List</h5>
+        <ol class="breadcrumbs"></ol>
+      </div>
+      <div class="col s3 breadcrumbs-title right">
+        <a href="" class="btn waves-effect waves-light indigo" ng-click="app.defaultMode='card'"><i class="mdi-action-view-module small"></i></a>
+        <a href="" class="btn waves-effect waves-light indigo" ng-click="app.defaultMode='list'"><i class="mdi-action-view-list small"></i></a>
+        <a href="" class="btn waves-effect waves-light indigo"><i class="mdi-hardware-keyboard-arrow-left small"></i></a>
+        <a href="" class="btn waves-effect waves-light indigo"><i class="mdi-hardware-keyboard-arrow-right small"></i></a>
+        <ol class="breadcrumbs"></ol>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row fade-in-out" ng-show="app.defaultMode==='card'">
+  <div class="col s12 m6 l3" ng-repeat="appointment in app.appointments">
+    <div class="card-panel" ng-class="appointment.className">
+      <div class="row">
+        <div class="col s4"><img src="assets/images/profile.png" alt="" class="circle responsive-img"></div>
+        <div class="col s8">
+          <span class="white-text">{{appointment.title}}</span>
+          <p class="white-text">+1234444444</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12">
+          <p class="white-text">{{appointment.start | date: 'dd MMM, yyyy hh:mm a'}}</p>
+          <p class="white-text">{{appointment.end | date: 'dd MMM, yyyy hh:mm a'}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row fade-in-out" ng-show="app.defaultMode==='list'">
+  <div class="col s12">
+    <table>
+        <thead>
+          <tr>
+              <th data-field="id">Name</th>
+              <th data-field="name">Reason to Visit</th>
+              <th data-field="price">Start</th>
+              <th data-field="price">End</th>
+              <th data-field="price">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="appointment in app.appointments">
+            <td>{{appointment.title}}</td>
+            <td>{{appointment.description}}</td>
+            <td>{{appointment.start | date: 'dd MMM, yyyy hh:mm a'}}</td>
+            <td>{{appointment.end | date: 'dd MMM, yyyy hh:mm a'}}</td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+</div>

@@ -7,6 +7,7 @@ angular.module('eventx', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
+  'ngAnimate',
   'btford.socket-io',
   'ui.router',
   'validation.match',

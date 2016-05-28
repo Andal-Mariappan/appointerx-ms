@@ -23,28 +23,14 @@ angular.module('eventx').factory('AppointmentService', function($resource) {
 		}
 	});
 
-
-
+appointment.byPatientID = $resource('/api/appointments/:patientId', null, {
+		query: {
+			method: 'GET',
+			params: {
+				patientId: '@patientId'
+			},
+			isArray: true
+		}
+	});
 	return appointment;
-
-	// return $resource('/api/appointments/:id', {
-	// 	id: '@_id'
-	// }, {
-	// 	'update': {
-	// 		method: 'PUT'
-	// 	}
-	// }, {
-	// 	query: {
-	// 		method: 'GET',
-	// 		isArray: true
-	// 	}
-	// }, {
-	// 	getByDocId: {
-	// 		method: 'GET',
-	// 		isArray: true,
-	// 		params: {
-	// 			docId: 'me'
-	// 		}
-	// 	}
-	// });
 });
