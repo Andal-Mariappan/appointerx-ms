@@ -80,7 +80,8 @@ export function byDocID(req, res) {
 	// console.log(req.params.docId);
 	Appointment.findAll({
 			where: {
-				physicianId: req.params.docId
+				physicianId: req.params.docId,
+				isHoliday:false
 			},
 			include: [{
 				model: User,

@@ -67,6 +67,7 @@ angular.module('eventx').directive('fullCalendar', function ($log, $timeout, $co
         allDaySlot: true,
         googleCalendarApiKey: 'AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE',
         viewRender: function (view, element) {
+          console.log(element);
           if (view.name === "agendaDay") {
             $('#calendar').fullCalendar('option', 'contentHeight', 'auto');
           }
@@ -152,7 +153,7 @@ angular.module('eventx').directive('fullCalendar', function ($log, $timeout, $co
           // ,
           // month
           ],
-        // events: scope.events,
+        // events: scope.events,.fc-widget-content
         // events: function(start, end, timezone, callback) {
         // 	// console.log(scope.events);
         // 	callback(scope.events);

@@ -1,7 +1,7 @@
 <sidebar></sidebar>
 <style>
 .fade-in-out {
-  transition: 1s linear all;  
+  transition: 0.2s linear all;  
   opacity: 1;
 }
 
@@ -63,6 +63,7 @@
             <td>{{appointment.description}}</td>
             <td>{{appointment.start | date: 'dd MMM, yyyy hh:mm a'}}</td>
             <td>{{appointment.end | date: 'dd MMM, yyyy hh:mm a'}}</td>
+            <td class="pink-text">{{appointment.status}}</td>
           </tr>
         </tbody>
       </table>

@@ -16,18 +16,21 @@
         <div id="flight-card" class="card">
           <div class="card-header indigo darken-1">
             <div class="row">
-              <div class="col s5">
+              <div class="col s12 m6 l7">
                 <div class="card-title">
-                  <h4 class="flight-card-title">Appointments</h4>
+                  <h5 class="flight-card-title">Physician's Appointments</h5>
                   <p class="flight-card-date">{{main.currentDate}}</p>
                 </div>
               </div>
-              <div class="col s7" ng-if="main.currentRole!=='physician'">
+              <div class="col s12 m6 l5" ng-if="main.currentRole!=='physician'">
                 <select id="filter_physician" select-2-custom class="amber darken-2" ng-model='main.physician' ng-change="main.onChange()" aria-placeholder="select 3">
                   <option selected disabled>Filter By Physician</option>
                   <option ng-repeat="p in main.physicians track by p._id" value="{{p._id}}">{{p.first_name}} {{p.last_name}}
                   </option>
                 </select>
+                <p class="flight-card-date">&nbsp;</p>
+                <blink class="cyan-text"  ng-if="main.slots && main.slots.length===0">This physician has not set any working shift.</blink>
+                
               </div>
             </div>
 
@@ -38,7 +41,6 @@
                 <div class="col s12">
                   <full-calendar id="dashboard-calendar-widget" slots="main.slots" data-events="appointments"></full-calendar>
                 </div>
-
               </div>
             </div>
           </div>

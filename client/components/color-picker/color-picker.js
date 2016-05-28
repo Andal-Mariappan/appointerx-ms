@@ -43,7 +43,7 @@ angular.module('eventx')
                     'indigo': '#3f51b5',
                     'green': '#4caf50',
                     'orange': '#ff9800',
-                    'pink': '#9e9e9e'
+                    'pink': '#e91e63'
                     },
                     format: 'hex',
                     color:  'indigo',

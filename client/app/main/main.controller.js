@@ -9,7 +9,7 @@
 			this.$http = $http;
 			this.awesomeThings = [];
 			this.appointments = [];
-			this.slots=[];
+			//this.slots=[];
 			this.isLoggedIn = Auth.isLoggedIn;
 			this.isAdmin = Auth.isAdmin;
 			this.getCurrentUser = Auth.getCurrentUser;
@@ -52,7 +52,7 @@
 					// give pure json object instead of $resource
 					var newArr = JSON.parse(angular.toJson(shifts));
 					vm.slots  = _.map(newArr, function(o) { return _.omit(o, '_id'); });
-					socket.syncUpdates('settings', vm.slots);
+					socket.syncUpdates('shifts', vm.slots);
 				});
 			}
 			

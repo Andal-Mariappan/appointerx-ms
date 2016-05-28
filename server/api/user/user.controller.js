@@ -200,11 +200,11 @@ export function changePassword(req, res, next) {
 				user.password = newPass;
 				return user.save()
 					.then(() => {
-						res.status(204).end();
+						res.status(204).end("Password successfully changed.");
 					})
 					.catch(validationError(res));
 			} else {
-				return res.status(403).end();
+				return res.status(403).end("password is incorrect.");
 			}
 		});
 }
