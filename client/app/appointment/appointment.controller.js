@@ -13,7 +13,7 @@
       vm.defaultMode='card'
       vm.getCurrentUser(function (user) {
         vm.currentUser = user;
-
+        
         // get app the appointments of logged users - physician/patient        
         if (vm.currentUser.role === 'patient') {
           AppointmentService.byPatientID.query({

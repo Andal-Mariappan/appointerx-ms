@@ -8,6 +8,74 @@
 .fade-in-out.ng-hide {
   opacity: 0;
 }
+
+
+.box-one.ng-hide-add {
+  -webkit-animation:0.5s hide;
+  animation:0.5s hide;
+}
+
+@keyframes hide {
+  0% {
+    opacity:1;
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.02);
+  }
+  100% { 
+    opacity:0;
+    transform: scale(0.5);
+  }
+}
+
+@-webkit-keyframes hide {
+  0% {
+    opacity:1;
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.02);
+  }
+  100% { 
+    opacity:0;
+    transform: scale(0.5);
+  }
+}
+
+
+.box-one.ng-hide-remove {
+  -webkit-animation:0.3s show;
+  animation:0.3s show;
+}
+
+@keyframes show {
+  0% {
+    opacity:0;
+    transform: scale(0.5);
+  }
+  70% {
+    transform: scale(1.02);
+  }
+  100% { 
+    opacity:1;
+    transform: scale(1);
+  }
+}
+
+@-webkit-keyframes show {
+  0% {
+    opacity:0;
+    transform: scale(0.5);
+  }
+  70% {
+    transform: scale(1.02);
+  }
+  100% { 
+    opacity:1;
+    transform: scale(1);
+  }
+}
 </style>
 <div id="breadcrumbs-wrapper">
   <div class="container">
@@ -17,16 +85,16 @@
         <ol class="breadcrumbs"></ol>
       </div>
       <div class="col s3 breadcrumbs-title right">
-        <a href="" class="btn waves-effect waves-light indigo" ng-click="app.defaultMode='card'"><i class="mdi-action-view-module small"></i></a>
-        <a href="" class="btn waves-effect waves-light indigo" ng-click="app.defaultMode='list'"><i class="mdi-action-view-list small"></i></a>
-        <a href="" class="btn waves-effect waves-light indigo"><i class="mdi-hardware-keyboard-arrow-left small"></i></a>
-        <a href="" class="btn waves-effect waves-light indigo"><i class="mdi-hardware-keyboard-arrow-right small"></i></a>
+        <a href="" class="btn waves-effect waves-light indigo" tooltipped data-position="bottom" data-delay="50" data-tooltip="Card View" ng-click="app.defaultMode='card'"><i class="mdi-action-view-module small"></i></a>
+        <a href="" class="btn waves-effect waves-light indigo" tooltipped data-position="bottom" data-delay="50" data-tooltip="List View" ng-click="app.defaultMode='list'"><i class="mdi-action-view-list small"></i></a>
+        <a href="" class="btn waves-effect waves-light indigo" tooltipped data-position="bottom" data-delay="50" data-tooltip="Previous"><i class="mdi-hardware-keyboard-arrow-left small"></i></a>
+        <a href="" class="btn waves-effect waves-light indigo" tooltipped data-position="bottom" data-delay="50" data-tooltip="Next"><i class="mdi-hardware-keyboard-arrow-right small"></i></a>
         <ol class="breadcrumbs"></ol>
       </div>
     </div>
   </div>
 </div>
-<div class="row fade-in-out" ng-show="app.defaultMode==='card'">
+<div class="row box-one" ng-show="app.defaultMode==='card'">
   <div class="col s12 m6 l3" ng-repeat="appointment in app.appointments">
     <div class="card-panel" ng-class="appointment.className">
       <div class="row">
@@ -45,9 +113,10 @@
     </div>
   </div>
 </div>
-<div class="row fade-in-out" ng-show="app.defaultMode==='list'">
-  <div class="col s12">
-    <table>
+<div class="row box-one" ng-show="app.defaultMode==='list'">
+   <div class="col s12">
+    <div class="card-panel">
+       <table>
         <thead>
           <tr>
               <th data-field="id">Name</th>
@@ -67,5 +136,7 @@
           </tr>
         </tbody>
       </table>
+    </div>
   </div>
+ 
 </div>

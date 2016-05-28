@@ -47,7 +47,11 @@ export function index(req, res) {
 				'_id',
 				'first_name',
 				'last_name',
+				'age',
+				'gender',
+				'birthdate',
 				'email',
+				'mobile',
 				'role',
 				'npi',
 				'provider'

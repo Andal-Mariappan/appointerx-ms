@@ -8,5 +8,6 @@ angular.module('eventx')
         templateUrl: 'app/appointment/appointment.html',
         controller: 'AppointmentCtrl',
         controllerAs: 'app',
+        authenticate: true
       });
   });

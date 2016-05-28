@@ -23,7 +23,7 @@ angular.module('eventx').factory('AppointmentService', function($resource) {
 		}
 	});
 
-appointment.byPatientID = $resource('/api/appointments/:patientId', null, {
+appointment.byPatientID = $resource('/api/appointments/patients/:patientId', null, {
 		query: {
 			method: 'GET',
 			params: {
