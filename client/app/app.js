@@ -13,7 +13,8 @@ angular.module('eventx', [
   'validation.match',
   'ui.calendar',
   'ui.materialize',
-  'perfect_scrollbar'
+  'perfect_scrollbar',
+  'chart.js'
 ])
   .config(function($urlRouterProvider, $locationProvider) {
     $urlRouterProvider

@@ -106,8 +106,8 @@
       </div>
       <div class="row">
         <div class="col s12">
-          <p class="white-text">{{appointment.start | date: 'dd MMM, yyyy hh:mm a'}}</p>
-          <p class="white-text">{{appointment.end | date: 'dd MMM, yyyy hh:mm a'}}</p>
+          <p class="white-text">From : {{appointment.start | UTCToNow}}</p>
+          <p class="white-text">End : {{appointment.end | UTCToNow}}</p>
         </div>
       </div>
     </div>
@@ -124,15 +124,23 @@
               <th data-field="price">Start</th>
               <th data-field="price">End</th>
               <th data-field="price">Status</th>
+            
           </tr>
         </thead>
         <tbody>
           <tr ng-repeat="appointment in app.appointments">
             <td>{{appointment.title}}</td>
             <td>{{appointment.description}}</td>
-            <td>{{appointment.start | date: 'dd MMM, yyyy hh:mm a'}}</td>
-            <td>{{appointment.end | date: 'dd MMM, yyyy hh:mm a'}}</td>
-            <td class="pink-text">{{appointment.status}}</td>
+            <td>{{appointment.start | UTCToNow}}</td>
+            <td>{{appointment.end | UTCToNow}}</td>
+            
+            <td ng-class="{'orange-text': appointment.status==='Awaiting', 'red-text': appointment.status==='Cancel','green-text': appointment.status==='Done'}">
+              <div input-field>
+                  <select ng-model="appointment.status" material-select watch ng-change="app.setAppointmentStatus(appointment)">                    
+                      <option   ng-repeat="value in app.appointmentStatus">{{value}}</option>
+                  </select>
+              </div>
+            </td>
           </tr>
         </tbody>
       </table>
