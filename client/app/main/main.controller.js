@@ -1,62 +1,100 @@
 'use strict';
 
-(function() {
+(function () {
 
 	class MainController {
 
-		constructor($http, $scope, $compile, socket, Auth, AppointmentService, User,Shifts) {
-			var vm= this;
+		constructor($http, $scope, $compile, socket, Auth, AppointmentService, User, Shifts) {
+			var vm = this;
 			this.$http = $http;
 			this.awesomeThings = [];
 			this.appointments = [];
-			//this.slots=[];
+			
 			this.isLoggedIn = Auth.isLoggedIn;
 			this.isAdmin = Auth.isAdmin;
 			this.getCurrentUser = Auth.getCurrentUser;
-			this.currentRole= this.getCurrentUser().role;
-			this.defaultView= "agendaDay"
-			this.currentDate= moment().format("dddd, MMMM Do YYYY");
-			this.onChange = function() {
+			this.currentRole = this.getCurrentUser().role;
+			this.defaultView = "agendaDay"
+			this.currentDate = moment().format("dddd, MMMM Do YYYY");
+			this.onChange = function () {
 				this.physician = this.physician;
 				this.filter_Calendar();
 			}
 
-			this.filter_Calendar = function() {
+			vm.weekday = new Array(5);
+			vm.weekday[1] = "Monday";
+			vm.weekday[2] = "Tuesday";
+			vm.weekday[3] = "Wednesday";
+			vm.weekday[4] = "Thursday";
+			vm.weekday[5] = "Friday";
+
+
+			this.filter_Calendar = function () {
 				getPhysician(this.physician);
-				getShifts(this.physician);
+				getShifts(this.physician, function (shifts) {
+					vm.myshift = shifts;
+				});
 			}
 			User.getPhysicians().$promise.then(response => {
 				this.physicians = response;
 				this.physician = response[0]._id;
 				getPhysician(this.physician);
-				getShifts(this.physician);
-				
+				getShifts(this.physician, function (shifts) {
+					vm.myshift = shifts;
+				});
 			});
-			
-			function getPhysician(physicianId)
-			{
+
+			function getPhysician(physicianId) {
 				AppointmentService.byDocId.query({
 					docId: physicianId
-				}).$promise.then(function(response) {
+				}).$promise.then(function (response) {
 					$scope.appointments = response;
-					
+
 					socket.syncUpdates('appointment', $scope.appointments);
 				});
 			}
-			
-			function getShifts(physicianId)
-			{
+
+			function getShifts(physicianId,cb) {
 				Shifts.byDocId({
 					docId: physicianId
-				}).$promise.then(function(shifts) {
+				}).$promise.then(function (shifts) {
 					// give pure json object instead of $resource
 					var newArr = JSON.parse(angular.toJson(shifts));
-					vm.slots  = _.map(newArr, function(o) { return _.omit(o, '_id'); });
+					vm.slots = _.map(newArr, function (o) { return _.omit(o, '_id'); });
 					socket.syncUpdates('shifts', vm.slots);
+					
+					var cnt = 1;
+					vm.shift = {data : []}
+											
+					vm.displayShift = angular.copy(vm.slots);
+					angular.forEach(vm.displayShift, function (o) {
+						var result = JSON.parse(o.dow).map(Number);
+						angular.forEach(result, function (item) {
+							if (vm.shift.data.hasOwnProperty(vm.weekday[item])) {
+								vm.shift.data[vm.weekday[item]][('start' + cnt)] = o.start;
+								vm.shift.data[vm.weekday[item]][('end' + cnt)] = o.end;
+							}
+							else {
+								vm.shift.data[vm.weekday[item]] = {};
+								vm.shift.data[vm.weekday[item]][('start' + cnt)] = o.start;
+								vm.shift.data[vm.weekday[item]][('end' + cnt)] = o.end;
+							}
+							vm.shift.data;
+						});
+						cnt++;
+					});
+					cb(vm.shift.data);
 				});
 			}
-			
-			this.exportCSV = function() {
+
+
+			// $scope.$watchCollection(function () {
+			// 	return vm.shiftArray;
+			// }, function (value) {
+			// 	vm.shiftArray = value;
+			// });
+
+			this.exportCSV = function () {
 				var dataToExport = [];
 				var dataX = [];
 				var columns = ['title', 'description', 'start', 'end',
@@ -97,8 +135,9 @@
 				angular.element('#data').val(JSON.stringify(dataToExport));
 				angular.element('#frmSubmit').submit();
 			}
-			
+
 		}
+
 	}
 
 	angular.module('eventx')

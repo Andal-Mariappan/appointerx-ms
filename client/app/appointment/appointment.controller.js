@@ -41,7 +41,7 @@
     
     setAppointmentStatus(app)
     {
-      console.log(app);
+      
       if(app)
       {
         delete app.patient;

@@ -8,8 +8,8 @@
         <ol class="breadcrumbs"></ol>
       </div>
       <div class="col s1 breadcrumbs-title right">
-         <button type="button" class="btn-floating btn-small waves-effect waves-light" data-position="bottom" data-delay="50" data-tooltip="Export to csv"
-        ng-click="main.exportCSV()" tooltipped>
+        <button type="button" class="btn-floating btn-small waves-effect waves-light" data-position="bottom" data-delay="50" data-tooltip="Export to csv"
+          ng-click="main.exportCSV()" tooltipped>
           <i class="material-icons">file_download</i>
      </button>
       </div>
@@ -31,14 +31,49 @@
                 </div>
               </div>
               <div class="col s12 m6 l5" ng-if="main.currentRole!=='physician'">
-                <select id="filter_physician" select-2-custom class="amber darken-2" ng-model='main.physician' ng-change="main.onChange()" aria-placeholder="select 3">
+                <select id="filter_physician" select-2-custom class="amber darken-2" ng-model='main.physician' ng-change="main.onChange()"
+                  aria-placeholder="select 3">
                   <option selected disabled>Filter By Physician</option>
                   <option ng-repeat="p in main.physicians track by p._id" value="{{p._id}}">{{p.first_name}} {{p.last_name}}
                   </option>
                 </select>
                 <p class="flight-card-date">&nbsp;</p>
-                <blink class="cyan-text"  ng-if="main.slots && main.slots.length===0">This physician has not set any working shift.</blink>
-                
+                <blink class="cyan-text" ng-if="main.slots && main.slots.length===0">This physician has not set any working shift.</blink>
+{{main.myshift}}
+                <!-- Modal Trigger -->
+
+                <!-- Modal Structure -->
+                <div id="demoModal" class="modal">
+                  <div class="modal-content">
+                    
+                    <table>
+                      <thead>
+                        <tr>
+                          <th data-field="id">Day</th>
+                          <th data-field="name">From</th>
+                          <th data-field="price">From</th>
+                        </tr>
+                      </thead>
+
+                      <tbody ng-repeat="shift in main.displayShift">
+                        <tr ng-repeat="dow in shift.dow  track by $index">
+
+                          <td>{{main.weekday[dow]}}</td>
+                          <td>{{shift.start}}</td>
+                          <td>{{shift.end}}</td>
+
+
+                        </tr>
+
+                      </tbody>
+                    </table>
+
+                  </div>
+                  <div class="modal-footer">
+                    <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Got it</a>
+                  </div>
+                </div>
+
               </div>
             </div>
 
@@ -47,6 +82,9 @@
             <div class="card-content">
               <div class="row">
                 <div class="col s12">
+                  <div class="col right" ng-if="main.slots && main.slots.length!==0">
+                    <a class='waves-effect waves-light' href='#demoModal' modal>View Working Hours</a>
+                  </div>
                   <full-calendar id="dashboard-calendar-widget" slots="main.slots" data-events="appointments"></full-calendar>
                 </div>
               </div>

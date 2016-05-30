@@ -51,12 +51,12 @@ angular.module('eventx').directive('fullCalendar', function ($log, $timeout, $co
         header: {
           left: 'title', //,today
           center: 'prevYear,prev,next,nextYear, today',
-          right: 'month,agendaWeek,agendaDay' //month, agendaDay,
+          right: 'agendaDay' //month,agendaWeek,
         },
         // contentHeight:'auto',
         minTime:"9:00",
         maxTime:"22:00",
-        defaultView: 'month',
+        defaultView: 'agendaDay',
         eventClick: alertOnEventClick,
         selectConstraint: 'businessHours',
         eventConstraint: 'businessHours',
@@ -67,7 +67,7 @@ angular.module('eventx').directive('fullCalendar', function ($log, $timeout, $co
         allDaySlot: true,
         googleCalendarApiKey: 'AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE',
         viewRender: function (view, element) {
-          console.log(element);
+          //console.log(element);
           if (view.name === "agendaDay") {
             $('#calendar').fullCalendar('option', 'contentHeight', 'auto');
           }
