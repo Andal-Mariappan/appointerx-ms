@@ -2529,3 +2529,6 @@ th {
     transform: scale(1);
   }
 }
+.badge-inherit{
+  position: inherit !important;
+}

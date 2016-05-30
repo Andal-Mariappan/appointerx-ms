@@ -39,51 +39,39 @@
                 </select>
                 <p class="flight-card-date">&nbsp;</p>
                 <blink class="cyan-text" ng-if="main.slots && main.slots.length===0">This physician has not set any working shift.</blink>
-{{main.myshift}}
                 <!-- Modal Trigger -->
-
                 <!-- Modal Structure -->
                 <div id="demoModal" class="modal">
-                  <div class="modal-content">
-                    
+                  <div class="modal-content teal white-text">
+                    <h4>Phisician's Shift Hours</h4>
                     <table>
-                      <thead>
+                      <thead ng-repeat="shift in shift.data">
                         <tr>
-                          <th data-field="id">Day</th>
-                          <th data-field="name">From</th>
-                          <th data-field="price">From</th>
+                          <th>Day</th>
+                          <th ng-repeat="(key, value) in shift['Monday']">{{key}}</th>
                         </tr>
                       </thead>
-
-                      <tbody ng-repeat="shift in main.displayShift">
-                        <tr ng-repeat="dow in shift.dow  track by $index">
-
-                          <td>{{main.weekday[dow]}}</td>
-                          <td>{{shift.start}}</td>
-                          <td>{{shift.end}}</td>
-
-
+                      <tbody>
+                        <tr ng-repeat="day in main.weekday" ng-if="day !=null">
+                          <td ng-bind="day"></td>
+                          <td ng-repeat="(key,value) in shift.data[0][day]" ng-bind="value"></td>
                         </tr>
-
                       </tbody>
                     </table>
-
                   </div>
-                  <div class="modal-footer">
-                    <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Got it</a>
+                  <div class="modal-footer  teal lighten-4">
+                    <a class=" modal-action modal-close waves-effect waves-green btn-flat">Got it</a>
                   </div>
                 </div>
-
               </div>
             </div>
-
           </div>
           <div class="card-content-bg1">
             <div class="card-content">
               <div class="row">
                 <div class="col s12">
                   <div class="col right" ng-if="main.slots && main.slots.length!==0">
-                    <a class='waves-effect waves-light' href='#demoModal' modal>View Working Hours</a>
+                    <a class='waves-effect waves-light' href='#demoModal' modal>View Shift Hours</a>
                   </div>
                   <full-calendar id="dashboard-calendar-widget" slots="main.slots" data-events="appointments"></full-calendar>
                 </div>

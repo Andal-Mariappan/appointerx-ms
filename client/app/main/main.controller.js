@@ -4,12 +4,12 @@
 
 	class MainController {
 
-		constructor($http, $scope, $compile, socket, Auth, AppointmentService, User, Shifts) {
+		constructor($http, $scope, $compile, $timeout, socket, Auth, AppointmentService, User, Shifts) {
 			var vm = this;
 			this.$http = $http;
 			this.awesomeThings = [];
 			this.appointments = [];
-			
+
 			this.isLoggedIn = Auth.isLoggedIn;
 			this.isAdmin = Auth.isAdmin;
 			this.getCurrentUser = Auth.getCurrentUser;
@@ -31,17 +31,13 @@
 
 			this.filter_Calendar = function () {
 				getPhysician(this.physician);
-				getShifts(this.physician, function (shifts) {
-					vm.myshift = shifts;
-				});
+				// getShifts(this.physician);
 			}
 			User.getPhysicians().$promise.then(response => {
 				this.physicians = response;
 				this.physician = response[0]._id;
 				getPhysician(this.physician);
-				getShifts(this.physician, function (shifts) {
-					vm.myshift = shifts;
-				});
+				getShifts(this.physician);
 			});
 
 			function getPhysician(physicianId) {
@@ -49,42 +45,53 @@
 					docId: physicianId
 				}).$promise.then(function (response) {
 					$scope.appointments = response;
-
 					socket.syncUpdates('appointment', $scope.appointments);
 				});
 			}
 
-			function getShifts(physicianId,cb) {
+			function getShifts(physicianId, cb) {
 				Shifts.byDocId({
 					docId: physicianId
 				}).$promise.then(function (shifts) {
 					// give pure json object instead of $resource
 					var newArr = JSON.parse(angular.toJson(shifts));
 					vm.slots = _.map(newArr, function (o) { return _.omit(o, '_id'); });
+
+					setShifts();
+
+
 					socket.syncUpdates('shifts', vm.slots);
-					
-					var cnt = 1;
-					vm.shift = {data : []}
-											
-					vm.displayShift = angular.copy(vm.slots);
-					angular.forEach(vm.displayShift, function (o) {
-						var result = JSON.parse(o.dow).map(Number);
-						angular.forEach(result, function (item) {
-							if (vm.shift.data.hasOwnProperty(vm.weekday[item])) {
-								vm.shift.data[vm.weekday[item]][('start' + cnt)] = o.start;
-								vm.shift.data[vm.weekday[item]][('end' + cnt)] = o.end;
-							}
-							else {
-								vm.shift.data[vm.weekday[item]] = {};
-								vm.shift.data[vm.weekday[item]][('start' + cnt)] = o.start;
-								vm.shift.data[vm.weekday[item]][('end' + cnt)] = o.end;
-							}
-							vm.shift.data;
-						});
-						cnt++;
-					});
-					cb(vm.shift.data);
 				});
+			}
+			function setShifts() {
+				var cnt = 1;
+				$scope.shift = {};
+				$scope.shift.data = new Array();
+
+				vm.displayShift = angular.copy(vm.slots);
+				angular.forEach(vm.displayShift, function (o) {
+					var result = JSON.parse(o.dow).map(Number);
+					var jsonData = {};
+					angular.forEach(result, function (item) {
+						if ($scope.shift.data.length > 0 && $scope.shift.data[0].hasOwnProperty(vm.weekday[item])) {
+
+							$scope.shift.data[0][vm.weekday[item]][('Start' + cnt)] = o.start;
+							$scope.shift.data[0][vm.weekday[item]][('End' + cnt)] = o.end;
+						}
+						else {
+							jsonData[vm.weekday[item]] = {}
+							//$scope.shift.data[vm.weekday[item]] = {};
+							jsonData[vm.weekday[item]][('Start' + cnt)] = o.start;
+							jsonData[vm.weekday[item]][('End' + cnt)] = o.end;
+						}
+					});
+					if (!angular.equals({}, jsonData)) {
+						$scope.shift.data.push(jsonData);
+					}
+					cnt++;
+				});
+
+				console.log($scope.shift.data);
 			}
 
 
