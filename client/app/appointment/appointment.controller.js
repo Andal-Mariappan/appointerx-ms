@@ -4,18 +4,48 @@
 
   class AppointmentCtrl {
 
-    constructor($timeout,$rootScope,$state, socket, AppointmentService, Auth) {
+    constructor($timeout, $rootScope, $state,$filter, socket, AppointmentService, Auth) {
       var vm = this;
       vm.appointments = [];
       vm.isAdmin = Auth.isAdmin;
-      this.AppointmentService=AppointmentService;
+      this.AppointmentService = AppointmentService;
       $rootScope.$state = $state;
       vm.getCurrentUser = Auth.getCurrentUser;
-      vm.defaultMode='card'
-      
+      vm.defaultMode = 'card'
+      vm.curPage = 0;
+      vm.pageSize = 4;
+
+
+      vm.numberOfPages = function () {
+        var myFilteredData = $filter('daterange')(vm.appointments, vm.startDate, vm.endDate)
+        if (myFilteredData) {
+          return Math.ceil(myFilteredData.length / vm.pageSize);
+        } else {
+          return Math.ceil(vm.appointments.length / vm.pageSize);
+        }  
+        //return Math.ceil(vm.appointments.length / vm.pageSize);
+      };
+
+      vm.dateRangeFilter = function (fieldStart, fieldEnd, startDate, endDate) {
+        return function (item) {
+          if (startDate && endDate) {
+            if (item[fieldStart] === null) return false;
+            var appStart = moment(item[fieldStart]).format("DD-MM-YYYY");
+            var appEnd = moment(item[fieldEnd]).format("DD-MM-YYYY");
+            var s = moment(startDate, "D,MMM dddd").format("DD-MM-YYYY");
+            var e = moment(endDate, "D,MMM dddd").format("DD-MM-YYYY");
+            console.log(vm.appointments.length);
+            console.log(appEnd <= e, appEnd, e, appStart);
+            if (appStart >= s && appEnd <= e) return true;
+            return false;
+          }
+          return true;
+        }
+      }
+
       vm.getCurrentUser(function (user) {
         vm.currentUser = user;
-      vm.appointmentStatus= ['Awaiting', 'Cancel', 'Done'];  
+        vm.appointmentStatus = ['Awaiting', 'Cancel', 'Done'];
         // get app the appointments of logged users - physician/patient        
         if (vm.currentUser.role === 'patient') {
           AppointmentService.byPatientID.query({
@@ -38,41 +68,72 @@
 
       });
     }
-    
-    setAppointmentStatus(app)
-    {
-      
-      if(app)
-      {
+
+
+
+
+    setAppointmentStatus(app) {
+
+      if (app) {
         delete app.patient;
         delete app.physician;
-        
+
         this.AppointmentService.update({
-				id: app._id
-			}, app).$promise.then(function () {
-				Materialize.toast('Appointment updated.', 2000, '', function () { });
-			}, function (error) { // error handler
-				if (error.data.errors) {
-					var err = error.data.errors;
-					console.log(err[Object.keys(err)].message, err[Object.keys(err)].name);
-				} else {
-					var msg = error.data.message;
-					console.log(msg);
-          Materialize.toast(msg, 2000, '', function () { });
-				}
-			});
-        
-        
+          id: app._id
+        }, app).$promise.then(function () {
+          Materialize.toast('Appointment updated.', 2000, '', function () { });
+        }, function (error) { // error handler
+          if (error.data.errors) {
+            var err = error.data.errors;
+            console.log(err[Object.keys(err)].message, err[Object.keys(err)].name);
+          } else {
+            var msg = error.data.message;
+            console.log(msg);
+            Materialize.toast(msg, 2000, '', function () { });
+          }
+        });
+
+
       }
-       console.log(app);
+      console.log(app);
     }
   }
 
   angular.module('eventx')
     .controller('AppointmentCtrl', AppointmentCtrl)
-  .filter('UTCToNow', function () {
-  return function (input, format) {
-    return moment.utc(input).format('dddd, MMMM Do YYYY, h:mmA');
-  };
-});
+    .filter('UTCToNow', function () {
+      return function (input, format) {
+        return moment.utc(input).format('dddd, MMMM Do YYYY, h:mmA');
+      };
+    }).filter('pagination', function () {
+      return function (input, start) {
+        if (input) {
+          start = +start;
+          return input.slice(start);
+        }
+        return [];
+      };
+    })
+    .filter('daterange', function () {
+      return function (appointments, start_date, end_date) {
+        var result = [];
+
+        // date filters
+        var start_date = (start_date && !isNaN(Date.parse(start_date))) ? Date.parse(start_date) : 0;
+        var end_date = (end_date && !isNaN(Date.parse(end_date))) ? Date.parse(end_date) : new Date().getTime();
+
+        // if the conversations are loaded
+        if (appointments && appointments.length > 0) {
+          $.each(appointments, function (index, appointment) {
+            var appointmentStart = new Date(appointment.start);
+            var appointmentEnd = new Date(appointment.end);
+
+            if (appointmentStart >= start_date && appointmentEnd <= end_date ) {
+              result.push(appointment);
+            }
+          });
+          return result;
+        }
+      };
+    });
 })();

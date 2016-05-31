@@ -14,6 +14,7 @@
 			this.isAdmin = Auth.isAdmin;
 			this.getCurrentUser = Auth.getCurrentUser;
 			this.currentRole = this.getCurrentUser().role;
+			this.view = this.currentRole==='patient' ? "agendaDay" : "month,agendaWeek,agendaDay"
 			this.defaultView = "agendaDay"
 			this.currentDate = moment().format("dddd, MMMM Do YYYY");
 			this.onChange = function () {

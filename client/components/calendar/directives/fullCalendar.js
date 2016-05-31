@@ -51,7 +51,7 @@ angular.module('eventx').directive('fullCalendar', function ($log, $timeout, $co
         header: {
           left: 'title', //,today
           center: 'prevYear,prev,next,nextYear, today',
-          right: 'agendaDay' //month,agendaWeek,
+          right: scope.view, //'agendaDay' //month,agendaWeek,
         },
         // contentHeight:'auto',
         minTime:"9:00",
@@ -214,6 +214,7 @@ angular.module('eventx').directive('fullCalendar', function ($log, $timeout, $co
       // scope.slots =angular.copy(newArr);
       // console.log(scope.slots);
       if (newValue != oldValue) {
+        scope.view = scope.view;
         $('#calendar').fullCalendar('destroy');
         initCalendar();
       }
@@ -222,6 +223,7 @@ angular.module('eventx').directive('fullCalendar', function ($log, $timeout, $co
     $timeout(function () {
       console.log(scope.slots);
       scope.slots = scope.slots;
+      scope.view = scope.view;
       initCalendar();
     });
 
@@ -233,7 +235,8 @@ angular.module('eventx').directive('fullCalendar', function ($log, $timeout, $co
     templateUrl: 'components/calendar/views/full-calendar.tpl.html',
     scope: {
       events: "=events",
-      slots: "=slots"
+      slots: "=slots",
+      view:"=view"
     },
     controller: 'CalendarCtrl',
     link: lnk

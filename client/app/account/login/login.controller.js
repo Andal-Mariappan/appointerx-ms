@@ -1,7 +1,7 @@
 'use strict';
 
 class LoginController {
-  constructor(Auth, $state,$rootScope) {
+  constructor(Auth, $state, $rootScope) {
     this.user = {};
     this.errors = {};
     this.submitted = false;
@@ -21,13 +21,17 @@ class LoginController {
         email: this.user.email,
         password: this.user.password
       })
-      .then(() => {
-        // Logged in, redirect to home
-        this.$state.go('main');
-      })
-      .catch(err => {
-        this.errors.other = err.message;
-      });
+        .then((user) => {
+          // Logged in, redirect to home
+          console.log(user);
+          if (user && (user.role === "physician" || user.role === "admin")) {
+            this.$state.go('dashboard');
+          }
+          else { this.$state.go('main'); }
+        })
+        .catch(err => {
+          this.errors.other = err.message;
+        });
     }
   }
 }

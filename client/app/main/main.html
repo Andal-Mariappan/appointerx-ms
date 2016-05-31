@@ -70,10 +70,13 @@
             <div class="card-content">
               <div class="row">
                 <div class="col s12">
-                  <div class="col right" ng-if="main.slots && main.slots.length!==0">
-                    <a class='waves-effect waves-light' href='#demoModal' modal>View Shift Hours</a>
+                  <div class="row" ng-if="main.slots && main.slots.length!==0 && main.currentRole!=='physician'">
+                    <div class="col s9 left">
+                      <p><a style="color:lightsalmon"><i class="mdi-action-grade"></i>color shows non working shifts</a></p>
+                    </div>
+                    <div class="col s3"><p><a class='waves-effect waves-light right' href='#demoModal' modal>View shifts hrs</a></p></div>
                   </div>
-                  <full-calendar id="dashboard-calendar-widget" slots="main.slots" data-events="appointments"></full-calendar>
+                  <full-calendar id="dashboard-calendar-widget" view="main.view" slots="main.slots" data-events="appointments"></full-calendar>
                 </div>
               </div>
             </div>

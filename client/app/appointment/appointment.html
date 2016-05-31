@@ -2,22 +2,70 @@
 <div id="breadcrumbs-wrapper">
   <div class="container">
     <div class="row">
-      <div class="col s9 left">
+      <div class="col s3 left">
         <h5 class="breadcrumbs-title">Appointment List</h5>
         <ol class="breadcrumbs"></ol>
+        <!--<label for="sdate" class="">Start</label>
+        <input type="date" id="sdate" class="datepicker" ng-model="startDate" />
+        <label for="edate" class="">End</label>
+        <input type="date" id="edate" class="datepicker" ng-model="endDate" />-->
+        <!--<div class="pagination pagination-centered" ng-show="app.appointments.length">
+<ul class="pagination-controle pagination">
+ <li>
+  <button type="button" class="btn btn-primary" ng-disabled="app.curPage === 0"
+ ng-click="app.curPage=app.curPage-1"> &lt; PREV</button>
+ </li>
+ <li>
+ <span>Page {{app.curPage + 1}} of {{ app.numberOfPages() }}</span>
+ </li>
+ <li>
+ <button type="button" class="btn btn-primary"
+ ng-disabled="app.curPage >= app.appointments.length/app.pageSize - 1"
+ ng-click="app.curPage = app.curPage+1">NEXT &gt;</button>
+ </li>
+</ul>
+</div>-->
       </div>
-      <div class="col s3 breadcrumbs-title right">
-        <a href="" class="btn waves-effect waves-light indigo" tooltipped data-position="bottom" data-delay="50" data-tooltip="Card View" ng-click="app.defaultMode='card'"><i class="mdi-action-view-module small"></i></a>
-        <a href="" class="btn waves-effect waves-light indigo" tooltipped data-position="bottom" data-delay="50" data-tooltip="List View" ng-click="app.defaultMode='list'"><i class="mdi-action-view-list small"></i></a>
-        <a href="" class="btn waves-effect waves-light indigo" tooltipped data-position="bottom" data-delay="50" data-tooltip="Previous"><i class="mdi-hardware-keyboard-arrow-left small"></i></a>
-        <a href="" class="btn waves-effect waves-light indigo" tooltipped data-position="bottom" data-delay="50" data-tooltip="Next"><i class="mdi-hardware-keyboard-arrow-right small"></i></a>
+
+      <div class="col s5">
+        <div class="row">
+          <div class="input-field col s4">
+            <label for="sdate" class="">Start</label>
+            <input type="date" id="sdate" class="datepicker" ng-model="app.startDate" />
+
+          </div>
+          <div class="input-field col s4">
+            <label for="edate" class="">End</label>
+            <input type="date" id="edate" class="datepicker" ng-model="app.endDate" />
+          </div>
+          <div class="col s4 input-field">
+            <p>Page {{app.curPage + 1}} of {{ app.numberOfPages()}}</p>
+            
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="col s4 breadcrumbs-title right">
+        <!--<p class="left">Page {{app.curPage + 1}} of {{ app.numberOfPages()}}  app.curPage >= app.appointments.length/app.pageSize - 1</p>-->
+        <a href="" class="btn waves-effect waves-light indigo" tooltipped data-position="bottom" data-delay="50" data-tooltip="Card View"
+          ng-click="app.defaultMode='card'"><i class="mdi-action-view-module small"></i></a>
+        <a href="" class="btn waves-effect waves-light indigo" tooltipped data-position="bottom" data-delay="50" data-tooltip="List View"
+          ng-click="app.defaultMode='list'"><i class="mdi-action-view-list small"></i></a>
+        <a ng-class="{'linkDisabled' : app.curPage ===0 }" ng-click="app.curPage=app.curPage-1" class="btn waves-effect waves-light indigo"
+          tooltipped data-position="bottom" data-delay="50" data-tooltip="Previous">
+          <i class="mdi-hardware-keyboard-arrow-left small"></i></a>
+        <a ng-class="{'linkDisabled' : app.curPage >= app.numberOfPages()-1}" ng-click="app.curPage = app.curPage+1" class="btn waves-effect waves-light indigo"
+          tooltipped data-position="bottom" data-delay="50" data-tooltip="Next"><i class="mdi-hardware-keyboard-arrow-right small"></i></a>
+          <button class="btn small-btn  waves-effect waves-light right" ng-click="clearFilter();">reset</button>
         <ol class="breadcrumbs"></ol>
       </div>
     </div>
   </div>
 </div>
 <div class="row box-one" ng-show="app.defaultMode==='card'">
-  <div class="col s12 m6 l3" ng-repeat="appointment in app.appointments">
+  <div class="col s12 m6 l3" ng-repeat="appointment in app.appointments | pagination: app.curPage * app.pageSize | limitTo: app.pageSize | daterange:app.startDate:app.endDate">
     <div class="card-panel" ng-class="appointment.className">
       <div class="row">
         <div class="col s4"><img src="assets/images/profile.png" alt="" class="circle responsive-img"></div>
@@ -36,29 +84,29 @@
   </div>
 </div>
 <div class="row box-one" ng-show="app.defaultMode==='list'">
-   <div class="col s12">
+  <div class="col s12">
     <div class="card-panel">
-       <table>
+      <table>
         <thead>
           <tr>
-              <th data-field="id">Name</th>
-              <th data-field="name">Reason to Visit</th>
-              <th data-field="price">Start</th>
-              <th data-field="price">End</th>
-              <th data-field="price">Status</th>
-            
+            <th data-field="id">Name</th>
+            <th data-field="name">Reason to Visit</th>
+            <th data-field="price">Start</th>
+            <th data-field="price">End</th>
+            <th data-field="price">Status</th>
+
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="appointment in app.appointments">
+          <tr ng-repeat="appointment in app.appointments | pagination: app.curPage * app.pageSize | limitTo: app.pageSize">
             <td>{{appointment.title}}</td>
             <td>{{appointment.description}}</td>
             <td>{{appointment.start | UTCToNow}}</td>
             <td>{{appointment.end | UTCToNow}}</td>
-            
+
             <td ng-class="{'orange-text': appointment.status==='Awaiting', 'red-text': appointment.status==='Cancel','green-text': appointment.status==='Done'}">
               <div input-field>
-                  <select ng-model="appointment.status" material-select watch ng-change="app.setAppointmentStatus(appointment)">                    
+                <select ng-model="appointment.status" material-select watch ng-change="app.setAppointmentStatus(appointment)">                    
                       <option   ng-repeat="value in app.appointmentStatus">{{value}}</option>
                   </select>
               </div>
@@ -68,5 +116,25 @@
       </table>
     </div>
   </div>
- 
+
 </div>
+<script>
+  $(document).ready(function(){
+          $('#edate').pickadate({
+            container: 'body',
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15, // Creates a dropdown of 15 years to control year
+            onClose: function(){
+              $(document.activeElement).blur()
+            }
+          });
+          $('#sdate').pickadate({
+            container: 'body',
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15, // Creates a dropdown of 15 years to control year
+            onClose: function(){
+              $(document.activeElement).blur()
+            }
+          });
+        });
+</script>
