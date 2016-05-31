@@ -26,22 +26,22 @@
         //return Math.ceil(vm.appointments.length / vm.pageSize);
       };
 
-      vm.dateRangeFilter = function (fieldStart, fieldEnd, startDate, endDate) {
-        return function (item) {
-          if (startDate && endDate) {
-            if (item[fieldStart] === null) return false;
-            var appStart = moment(item[fieldStart]).format("DD-MM-YYYY");
-            var appEnd = moment(item[fieldEnd]).format("DD-MM-YYYY");
-            var s = moment(startDate, "D,MMM dddd").format("DD-MM-YYYY");
-            var e = moment(endDate, "D,MMM dddd").format("DD-MM-YYYY");
-            console.log(vm.appointments.length);
-            console.log(appEnd <= e, appEnd, e, appStart);
-            if (appStart >= s && appEnd <= e) return true;
-            return false;
-          }
-          return true;
-        }
-      }
+      // vm.dateRangeFilter = function (fieldStart, fieldEnd, startDate, endDate) {
+      //   return function (item) {
+      //     if (startDate && endDate) {
+      //       if (item[fieldStart] === null) return false;
+      //       var appStart = moment(item[fieldStart]).format("DD-MM-YYYY");
+      //       var appEnd = moment(item[fieldEnd]).format("DD-MM-YYYY");
+      //       var s = moment(startDate, "D,MMM dddd").format("DD-MM-YYYY");
+      //       var e = moment(endDate, "D,MMM dddd").format("DD-MM-YYYY");
+      //       console.log(vm.appointments.length);
+      //       console.log(appEnd <= e, appEnd, e, appStart);
+      //       if (appStart >= s && appEnd <= e) return true;
+      //       return false;
+      //     }
+      //     return true;
+      //   }
+      // }
 
       vm.getCurrentUser(function (user) {
         vm.currentUser = user;
@@ -113,27 +113,79 @@
         }
         return [];
       };
-    })
-    .filter('daterange', function () {
-      return function (appointments, start_date, end_date) {
-        var result = [];
+    }).filter('daterange', function() {
+    return function(items, startDate, endDate) {
+        var filteredResult = [];
 
-        // date filters
-        var start_date = (start_date && !isNaN(Date.parse(start_date))) ? Date.parse(start_date) : 0;
-        var end_date = (end_date && !isNaN(Date.parse(end_date))) ? Date.parse(end_date) : new Date().getTime();
+        // Parse from the filter format 'dd/mm/yyyy' (Turkish culture)
+        // function parseDateFromFilter(strDate) {
+        //     var parts = strDate.split('/');
+        //     return new Date(parts[2], parts[1] - 1, parts[0]);
+        // }
 
-        // if the conversations are loaded
-        if (appointments && appointments.length > 0) {
-          $.each(appointments, function (index, appointment) {
-            var appointmentStart = new Date(appointment.start);
-            var appointmentEnd = new Date(appointment.end);
+        // // Parse the UTC time data from JSON source
+        // function parseDateFromUtc(utcStr) {
+        //   return moment.utc(utcStr).format('dd/mm/yyyy');
+        //     //return new Date(utcStr);
+        // }
 
-            if (appointmentStart >= start_date && appointmentEnd <= end_date ) {
-              result.push(appointment);
-            }
-          });
-          return result;
+        // Defaults
+        // var parsedStartDate = startDate ? parseDateFromFilter(startDate) : new Date(1900, 1, 1);
+        // var parsedEndDate = endDate ? parseDateFromFilter(endDate) : new Date();
+        
+        // Take action if the filter elements are filled
+        if (startDate && endDate) {
+                  
+          items.forEach(function (item) {
+            console.log(item.start);
+            console.log(item.end); 
+             var appStart = moment(item.start)
+            var appEnd = moment(item.end);
+            var s = moment(startDate);
+            var e = moment(endDate);
+
+            
+            console.log(appStart,s,appEnd,e);            
+
+            console.log(appStart >= s);
+            console.log(appEnd <= e);
+
+            console.log(appEnd.isBefore(e) && appStart.isAfter(s) || (appStart.isSame(s) || appEnd.isSame(e))); 
+
+
+            if (appStart >= s && appEnd <= e) {
+              console.log(appStart >= s);
+                    filteredResult.push(item);
+                }
+            });
+
+        } else {
+            return items; // By default, show the regular table data
         }
-      };
-    });
+
+        return filteredResult;
+    }
+});
+    // .filter('daterange', function () {
+    //   return function (appointments, start_date, end_date) {
+    //     var result = [];
+
+    //     // date filters
+    //     var start_date = (start_date && !isNaN(Date.parse(start_date))) ? Date.parse(start_date) : 0;
+    //     var end_date = (end_date && !isNaN(Date.parse(end_date))) ? Date.parse(end_date) : new Date().getTime();
+
+    //     // if the conversations are loaded
+    //     if (appointments && appointments.length > 0) {
+    //       $.each(appointments, function (index, appointment) {
+    //         var appointmentStart = new Date(appointment.start);
+    //         var appointmentEnd = new Date(appointment.end);
+
+    //         if (appointmentStart >= start_date && appointmentEnd <= end_date ) {
+    //           result.push(appointment);
+    //         }
+    //       });
+    //       return result;
+    //     }
+    //   };
+    // });
 })();
