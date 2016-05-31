@@ -4,7 +4,7 @@ angular.module('eventx').controller('CalendarCtrl', function ($scope, $log, $tim
 
 	$scope.userInfo = {}
 	$scope.getCurrentUser = Auth.getCurrentUser;
-	
+	$scope.submitted = false;
 
 
 
@@ -31,67 +31,69 @@ angular.module('eventx').controller('CalendarCtrl', function ($scope, $log, $tim
 
 
 
-	$scope.onChange=function()
-	{
+	$scope.onChange = function () {
 		var selectedPatient = JSON.parse($scope.newEvent.patient);
 		$scope.newEvent.title = selectedPatient.first_name + " " + selectedPatient.last_name;
 		$scope.newEvent.PatientId = selectedPatient._id;
 		console.log($scope.newEvent);
 	}
 
-	$scope.addAppointment = function () {
-		var newEventDefaults = {
-			title: "Patient Name",
-			PhysicianId: $scope.selected_Physician,
-			className: "",
-			icon: "",
-			allDay: false,
-			PatientId: $scope.currentUser._id,
-			UserId: $scope.currentUser._id
-		};
+	$scope.addAppointment = function (form) {
 
-		console.log($scope.newEvent)
+		$scope.submitted = true;
+		if (form.$valid) {
+			var newEventDefaults = {
+				title: "Patient Name",
+				PhysicianId: $scope.selected_Physician,
+				className: "",
+				icon: "",
+				allDay: false,
+				PatientId: $scope.currentUser._id,
+				UserId: $scope.currentUser._id
+			};
 
-		if($scope.getCurrentUser().role==='patient')
-		{
-			newEventDefaults.title= $scope.getCurrentUser().first_name + " " + $scope.getCurrentUser().last_name; 
-		}
-		
-		$scope.newEvent = angular.extend(newEventDefaults, $scope.newEvent);
-		console.log($scope.newEvent)
-		if ($scope.newEvent._id) {
 
-			AppointmentService.update({
-				id: $scope.newEvent._id
-			}, $scope.newEvent).$promise.then(function () {
-				Materialize.toast('Appointment updated.', 2000, '', function () { });
-			}, function (error) { // error handler
-				if (error.data.errors) {
-					var err = error.data.errors;
-					console.log(err[Object.keys(err)].message, err[Object.keys(err)].name);
-				} else {
-					var msg = error.data.message;
-					console.log(msg);
-				}
+			if ($scope.getCurrentUser().role === 'patient') {
+				newEventDefaults.title = $scope.getCurrentUser().first_name + " " + $scope.getCurrentUser().last_name;
+			}
+
+			$scope.newEvent = angular.extend(newEventDefaults, $scope.newEvent);
+			if ($scope.newEvent._id) {
+
+				AppointmentService.update({
+					id: $scope.newEvent._id
+				}, $scope.newEvent).$promise.then(function () {
+					$scope.submitted=false;
+					Materialize.toast('Appointment updated.', 2000, '', function () { });
+				}, function (error) { // error handler
+					if (error.data.errors) {
+						var err = error.data.errors;
+						console.log(err[Object.keys(err)].message, err[Object.keys(err)].name);
+					} else {
+						var msg = error.data.message;
+						console.log(msg);
+					}
+				});
+			} else {
+				AppointmentService.save($scope.newEvent).$promise.then(function () {
+					$scope.submitted=false;
+					Materialize.toast('Appointment added.', 2000, '', function () { });
+				}, function (error) { // error handler
+					if (error.data.errors) {
+						var err = error.data.errors;
+						console.log(err[Object.keys(err)].message, err[Object.keys(err)].name);
+					} else {
+						var msg = error.data.message;
+						console.log(msg);
+					}
+				});
+			}
+
+			$timeout(function () {
+				$scope.newEvent = {};
+				$('.event-collapse').sideNav('hide');
 			});
-		} else {
-			AppointmentService.save($scope.newEvent).$promise.then(function () {
-				Materialize.toast('Appointment added.', 2000, '', function () { });
-			}, function (error) { // error handler
-				if (error.data.errors) {
-					var err = error.data.errors;
-					console.log(err[Object.keys(err)].message, err[Object.keys(err)].name);
-				} else {
-					var msg = error.data.message;
-					console.log(msg);
-				}
-			});
 		}
-
-		$timeout(function () {
-			$scope.newEvent = {};
-			$('.event-collapse').sideNav('hide');
-		});
 	};
 
 	$scope.deleteEvent = function () {

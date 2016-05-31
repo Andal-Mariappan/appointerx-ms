@@ -20,7 +20,7 @@
                                 <span ng-bind="eve.to"></span>
                             </div>
                             <div class="row">
-                                <form class="col s12" name="event" ng-submit="addAppointment()">
+                                <form class="col s12" name="event" ng-submit="addAppointment(event)" novalidate>
                                     <!--<div class="row">
                                         <div class="input-field col s12">
                                             <i ng-class="{'active':focus}" class="mdi-editor-mode-edit prefix"></i>
@@ -47,8 +47,10 @@
                                     <div class="row">
                                         <div class="input-field col s12">
                                             <i class="mdi-editor-mode-edit prefix"></i>
-                                            <textarea id="description" name="description" ng-model="newEvent.description" class="materialize-textarea validate" length="120"></textarea>
+                                            <textarea id="description" name="description" ng-model="newEvent.description" class="materialize-textarea validate" ng-maxlength="25" required></textarea>
                                             <label for="description">Reason for visit</label>
+                                            <div class="errorTxt1" ng-show="event.description.$error.required && submitted" style="margin-left: 11%;"><div id="ufname-error" class="error">Reason is required</div></div>
+                                            <div class="errorTxt1" ng-show="event.description.$error.maxlength && submitted" style="margin-left: 11%;"><div id="uname-error" class="error">Reason must be 25 in length</div></div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -57,9 +59,9 @@
                                             <select class="" ng-model="newEvent.icon" material-select watch ng-change="changeIcon()">
                                                 <option value="" disabled selected>Select Appointment Icon</option>
                                                 <option value="mdi-action-redeem" class="circle">BirthDay</option>
-                                                <option value="mdi-action-settings-phone" class="circle">Do call</option>
-                                                <option value="mdi-action-shopping-basket" class="circle">Go Market</option>
-                                                <option value="mdi-action-theaters" class="circle">Movie</option>                                                
+                                                <option value="mdi-action-settings-phone" class="circle">FollowUp</option>
+                                                <option value="mdi-action-shopping-basket" class="circle">Routine</option>
+                                                <option value="mdi-action-theaters" class="circle">Visit</option>                                                
                                                 <option value="mdi-action-info"  class="circle">Info</option>
                                                 <option value="mdi-alert-warning" class="circle">Warning</option>
                                                 <option value="mdi-action-event" class="circle">Event</option>
@@ -90,10 +92,10 @@
                                     </div>
                                     <div class="row">
                                         <div class="input-field col s4">
-                                            <input type='checkbox' id='event-allday' ng-model="newEvent.allDay" />
-                                            <label for='event-allday'>allDay?</label>
+                                            <!--<input type='checkbox' id='event-allday' ng-model="newEvent.allDay" />
+                                            <label for='event-allday'>allDay?</label>-->
                                         </div>
-                                        <div class="col s8">
+                                        <div class="col s8 offset-s1 left">
                                             <button class="btn indigo waves-effect waves-light" type="submit" name="action">Save
                                                     <i class="mdi-content-send right"></i>
                                                 </button>

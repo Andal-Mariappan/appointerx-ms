@@ -98,7 +98,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="appointment in app.appointments | pagination: app.curPage * app.pageSize | limitTo: app.pageSize">
+          <tr ng-repeat="appointment in app.appointments | pagination: app.curPage * app.pageSize | limitTo: app.pageSize | daterange:app.startDate:app.endDate">
             <td>{{appointment.title}}</td>
             <td>{{appointment.description}}</td>
             <td>{{appointment.start | UTCToNow}}</td>

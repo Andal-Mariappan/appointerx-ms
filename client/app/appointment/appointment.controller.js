@@ -13,7 +13,7 @@
       vm.getCurrentUser = Auth.getCurrentUser;
       vm.defaultMode = 'card'
       vm.curPage = 0;
-      vm.pageSize = 4;
+      vm.pageSize = 12;
 
 
       vm.numberOfPages = function () {
@@ -116,45 +116,26 @@
     }).filter('daterange', function() {
     return function(items, startDate, endDate) {
         var filteredResult = [];
-
-        // Parse from the filter format 'dd/mm/yyyy' (Turkish culture)
-        // function parseDateFromFilter(strDate) {
-        //     var parts = strDate.split('/');
-        //     return new Date(parts[2], parts[1] - 1, parts[0]);
-        // }
-
-        // // Parse the UTC time data from JSON source
-        // function parseDateFromUtc(utcStr) {
-        //   return moment.utc(utcStr).format('dd/mm/yyyy');
-        //     //return new Date(utcStr);
-        // }
-
-        // Defaults
-        // var parsedStartDate = startDate ? parseDateFromFilter(startDate) : new Date(1900, 1, 1);
-        // var parsedEndDate = endDate ? parseDateFromFilter(endDate) : new Date();
-        
         // Take action if the filter elements are filled
         if (startDate && endDate) {
                   
           items.forEach(function (item) {
-            console.log(item.start);
-            console.log(item.end); 
-             var appStart = moment(item.start)
-            var appEnd = moment(item.end);
-            var s = moment(startDate);
-            var e = moment(endDate);
-
             
-            console.log(appStart,s,appEnd,e);            
+             var appStart = moment(new Date(item.start)).format("DD-MM-YYYY"); 
+            var appEnd = moment(new Date(item.end)).format("DD-MM-YYYY");
+            var s = moment(new Date(startDate)).format("DD-MM-YYYY");
+            var e = moment(new Date(endDate)).format("DD-MM-YYYY");
 
-            console.log(appStart >= s);
-            console.log(appEnd <= e);
+             
+             console.log(appStart,e,appEnd,s);
+             console.log(appStart >= s);
+             console.log(appEnd <= e);
 
-            console.log(appEnd.isBefore(e) && appStart.isAfter(s) || (appStart.isSame(s) || appEnd.isSame(e))); 
+            // console.log(appEnd.isBefore(e) && appStart.isAfter(s) || (appStart.isSame(s) || appEnd.isSame(e)));
+            //console.log(appStart.isBefore(s) ,appEnd.isAfter(e)); 
 
 
-            if (appStart >= s && appEnd <= e) {
-              console.log(appStart >= s);
+             if (appStart >= s && appEnd <= e ) {
                     filteredResult.push(item);
                 }
             });
