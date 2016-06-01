@@ -18,7 +18,8 @@
                         <li ng-show="side.isLoggedIn()"><a ui-sref="logout"><i class="mdi-hardware-keyboard-tab"></i> Logout</a>
                         </li>
                     </ul>
-                    <a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#" dropdown data-hover="false" data-activates="profile-dropdown">{{ side.getCurrentUser().first_name }}<i class="mdi-navigation-arrow-drop-down right"></i></a>
+                    <a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#" dropdown data-hover="false" data-activates="profile-dropdown">{{ side.getCurrentUser().first_name }} <i class="mdi-navigation-arrow-drop-down right"></i></a>
+                    <p class="user-roal">Profile - {{ side.getCurrentUser().role }}</p>
                 </div>
             </div>
             </li>
