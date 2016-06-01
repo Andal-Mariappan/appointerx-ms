@@ -313,6 +313,9 @@ export function me(req, res, next) {
 				'last_name',
 				'email',
 				'role',
+				'gender',
+				'mobile',
+				'age',
 				'npi',
 				'provider',
 				'createdAt'

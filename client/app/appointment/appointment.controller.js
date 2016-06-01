@@ -126,20 +126,14 @@
 
           items.forEach(function (item) {
 
-            var appStart = moment(new Date(item.start)).format("DD-MM-YYYY");
-            var appEnd = moment(new Date(item.end)).format("DD-MM-YYYY");
-            var s = moment(new Date(startDate)).format("DD-MM-YYYY");
-            var e = moment(new Date(endDate)).format("DD-MM-YYYY");
+            var appStart = moment(new Date(item.start)).format("MM-DD-YYYY");
+            var appEnd = moment(new Date(item.end)).format("MM-DD-YYYY");
+            var s = moment(new Date(startDate)).format("MM-DD-YYYY");
+            var e = moment(new Date(endDate)).format("MM-DD-YYYY");
 
-
-            console.log(appStart, e, appEnd, s);
+            console.log(appStart, s, appEnd, e);
             console.log(appStart >= s);
             console.log(appEnd <= e);
-
-            // console.log(appEnd.isBefore(e) && appStart.isAfter(s) || (appStart.isSame(s) || appEnd.isSame(e)));
-            //console.log(appStart.isBefore(s) ,appEnd.isAfter(e)); 
-
-
             if (appStart >= s && appEnd <= e) {
               filteredResult.push(item);
             }

@@ -39,8 +39,8 @@ angular.module('eventx').directive('fullCalendar', function ($log, $timeout, $co
       calendar = $calendar.fullCalendar({
         lang: 'en',
         editable: true,
-        draggable: false,
-        selectable: true,
+        draggable: true,
+        selectable: false,
         selectHelper: true,
         unselectAuto: false,
         eventOverlap: false,
@@ -81,14 +81,14 @@ angular.module('eventx').directive('fullCalendar', function ($log, $timeout, $co
           //console.log('end is ' + end.format());
           scope.newEvent = angular.copy(event);
           scope.newEvent.className = event.className.join(' ');
-          scope.addAppointment();
+          scope.draggedAppointment();
         },
         eventResize: function (event, delta, revertFunc) {
           // console.log(event._id);
           // console.log("Start time: " + event.start.format() + "end time: " + event.end.format());
           scope.newEvent = angular.copy(event);
           scope.newEvent.className = event.className.join(' ');
-          scope.addAppointment();
+          scope.draggedAppointment();
 
         },
         // timeFormat: 'H(:mm)',
@@ -123,7 +123,7 @@ angular.module('eventx').directive('fullCalendar', function ($log, $timeout, $co
             $(this).remove();
           }
           scope.newEvent = angular.copy(copiedEventObject);
-          scope.addAppointment();
+          scope.draggedAppointment();
         },
 
         select: function (start, end, allDay) {

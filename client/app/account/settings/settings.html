@@ -78,7 +78,7 @@
                   <div class="row">
                     <div class="input-field col s6">
                       <i class="mdi-action-account-circle prefix"></i>
-                      <input id="firstname" name="firstname" type="text" ng-model="vm.user.firstname" required>
+                      <input id="firstname" name="firstname" type="text" ng-model="vm.user.first_name" required>
                       <label for="firstname">FirstName*</label>
                       <div class="errorTxt1" ng-show="form.firstname.$error.required && vm.submittedProfileform" >
                         <div id="ufname-error" class="error">FirstName is required</div>
@@ -86,7 +86,7 @@
                     </div>
                     <div class="input-field col s6">
                       <i class="mdi-action-account-circle prefix"></i>
-                      <input id="lastname" name="lastname" type="text" ng-model="vm.user.lastname" required>
+                      <input id="lastname" name="lastname" type="text" ng-model="vm.user.last_name" required>
                       <label for="lastname">LastName*</label>
                       <div class="errorTxt1" ng-show="form.lastname.$error.required && vm.submittedProfileform" >
                         <div id="ulname-error" class="error">LastName is required</div>

@@ -7,7 +7,8 @@ class SettingsController {
     this.submittedProfileform = false;
     this.Auth = Auth;
     if ($cookies.get('token') && $location.path() !== '/logout') {
-			this.currentUser = User.get();
+      this.currentUser = User.get();
+      this.user = this.currentUser;
       console.log(this.currentUser)
 		}
   }

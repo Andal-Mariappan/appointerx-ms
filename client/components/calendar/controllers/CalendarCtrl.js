@@ -39,62 +39,69 @@ angular.module('eventx').controller('CalendarCtrl', function ($scope, $log, $tim
 	}
 
 	$scope.addAppointment = function (form) {
-
 		$scope.submitted = true;
 		if (form.$valid) {
-			var newEventDefaults = {
-				title: "Patient Name",
-				PhysicianId: $scope.selected_Physician,
-				className: "pink",
-				icon: "",
-				allDay: false,
-				PatientId: $scope.currentUser._id,
-				UserId: $scope.currentUser._id
-			};
-
-
-			if ($scope.getCurrentUser().role === 'patient') {
-				newEventDefaults.title = $scope.getCurrentUser().first_name + " " + $scope.getCurrentUser().last_name;
-			}
-
-			$scope.newEvent = angular.extend(newEventDefaults, $scope.newEvent);
-			if ($scope.newEvent._id) {
-
-				AppointmentService.update({
-					id: $scope.newEvent._id
-				}, $scope.newEvent).$promise.then(function () {
-					$scope.submitted=false;
-					Materialize.toast('Appointment updated.', 2000, '', function () { });
-				}, function (error) { // error handler
-					if (error.data.errors) {
-						var err = error.data.errors;
-						console.log(err[Object.keys(err)].message, err[Object.keys(err)].name);
-					} else {
-						var msg = error.data.message;
-						console.log(msg);
-					}
-				});
-			} else {
-				AppointmentService.save($scope.newEvent).$promise.then(function () {
-					$scope.submitted=false;
-					Materialize.toast('Appointment added.', 2000, '', function () { });
-				}, function (error) { // error handler
-					if (error.data.errors) {
-						var err = error.data.errors;
-						console.log(err[Object.keys(err)].message, err[Object.keys(err)].name);
-					} else {
-						var msg = error.data.message;
-						console.log(msg);
-					}
-				});
-			}
-
-			$timeout(function () {
-				$scope.newEvent = {};
-				$('.event-collapse').sideNav('hide');
-			});
+			saveAppointment();
 		}
 	};
+
+	$scope.draggedAppointment = function (form) {
+		saveAppointment();
+	};
+
+	function saveAppointment() {
+		var newEventDefaults = {
+			title: "Patient Name",
+			PhysicianId: $scope.selected_Physician,
+			className: "pink",
+			icon: "",
+			allDay: false,
+			PatientId: $scope.currentUser._id,
+			UserId: $scope.currentUser._id
+		};
+
+
+		if ($scope.getCurrentUser().role === 'patient') {
+			newEventDefaults.title = $scope.getCurrentUser().first_name + " " + $scope.getCurrentUser().last_name;
+		}
+
+		$scope.newEvent = angular.extend(newEventDefaults, $scope.newEvent);
+		if ($scope.newEvent._id) {
+
+			AppointmentService.update({
+				id: $scope.newEvent._id
+			}, $scope.newEvent).$promise.then(function () {
+				$scope.submitted = false;
+				Materialize.toast('Appointment updated.', 2000, '', function () { });
+			}, function (error) { // error handler
+				if (error.data.errors) {
+					var err = error.data.errors;
+					console.log(err[Object.keys(err)].message, err[Object.keys(err)].name);
+				} else {
+					var msg = error.data.message;
+					console.log(msg);
+				}
+			});
+		} else {
+			AppointmentService.save($scope.newEvent).$promise.then(function () {
+				$scope.submitted = false;
+				Materialize.toast('Appointment added.', 2000, '', function () { });
+			}, function (error) { // error handler
+				if (error.data.errors) {
+					var err = error.data.errors;
+					console.log(err[Object.keys(err)].message, err[Object.keys(err)].name);
+				} else {
+					var msg = error.data.message;
+					console.log(msg);
+				}
+			});
+		}
+
+		$timeout(function () {
+			$scope.newEvent = {};
+			$('.event-collapse').sideNav('hide');
+		});
+	}
 
 	$scope.deleteEvent = function () {
 		if (!$scope.newEvent._id) return;
