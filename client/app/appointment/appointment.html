@@ -27,7 +27,7 @@
 </div>-->
       </div>
 
-      <div class="col s5">
+      <div class="col s12 m12 l5">
         <div class="row">
           <div class="input-field col s4">
             <label for="sdate" class="">Start</label>
@@ -39,15 +39,16 @@
             <input type="date" id="edate" class="datepicker" ng-model="app.endDate" />
           </div>
           <div class="col s4 input-field">
-            <p>Page {{app.curPage + 1}} of {{ app.numberOfPages()}}</p>
-            
+            <!--<p>Page {{app.curPage + 1}} of {{ app.numberOfPages()}}</p>-->
+            <label for="ps" class="">PageSize</label>
+            <input type="text" id="ps" ng-model="app.pageSize" />
           </div>
         </div>
       </div>
 
 
 
-      <div class="col s4 breadcrumbs-title right">
+      <div class="col s12 m6 l4 breadcrumbs-title right">
         <!--<p class="left">Page {{app.curPage + 1}} of {{ app.numberOfPages()}}  app.curPage >= app.appointments.length/app.pageSize - 1</p>-->
         <a href="" class="btn waves-effect waves-light indigo" tooltipped data-position="bottom" data-delay="50" data-tooltip="Card View"
           ng-click="app.defaultMode='card'"><i class="mdi-action-view-module small"></i></a>
@@ -58,8 +59,8 @@
           <i class="mdi-hardware-keyboard-arrow-left small"></i></a>
         <a ng-class="{'linkDisabled' : app.curPage >= app.numberOfPages()-1}" ng-click="app.curPage = app.curPage+1" class="btn waves-effect waves-light indigo"
           tooltipped data-position="bottom" data-delay="50" data-tooltip="Next"><i class="mdi-hardware-keyboard-arrow-right small"></i></a>
-          <button class="btn small-btn  waves-effect waves-light right" ng-click="clearFilter();">reset</button>
-        <ol class="breadcrumbs"></ol>
+          <button class="btn small-btn  waves-effect waves-light right" ng-click="app.clearFilter();">reset</button>
+          <p class="pagenumber right">Page {{app.curPage + 1}} of {{ app.numberOfPages()}}</p>
       </div>
     </div>
   </div>

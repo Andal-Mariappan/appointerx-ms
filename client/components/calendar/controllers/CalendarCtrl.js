@@ -45,7 +45,7 @@ angular.module('eventx').controller('CalendarCtrl', function ($scope, $log, $tim
 			var newEventDefaults = {
 				title: "Patient Name",
 				PhysicianId: $scope.selected_Physician,
-				className: "",
+				className: "pink",
 				icon: "",
 				allDay: false,
 				PatientId: $scope.currentUser._id,

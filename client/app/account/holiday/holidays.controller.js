@@ -3,8 +3,8 @@
 class HolidaysController {
   constructor(Auth, Holidays, $cookies, $location, $state, $scope, socket) {
     var vm = this;
-    vm.holiday={};
-    vm.holiday.className='red'
+    vm.holiday = {};
+    vm.holiday.className = 'red'
     this.errors = {};
     this.submitted = false;
     this.Auth = Auth;
@@ -28,25 +28,29 @@ class HolidaysController {
       socket.unsyncUpdates("appointment");
     });
   }
+  reset() {
+    console.log(this.holiday);
+    this.holiday = {};
+  }
 
   save(form) {
     this.submitted = true;
     if (form.$valid) {
-      
-    var fromDate = moment(this.holiday.fromdate.toString(), "D, MMM yyyy").format("YYYY-MM-DD");
-    var toDate = moment(this.holiday.todate.toString(), "D, MMM yyyy").format("YYYY-MM-DD");
-    var startTime = moment(this.holiday.fromtime.toString(), "h:mm a").format("HH:mm");
-    var endTime = moment(this.holiday.totime.toString(), "h:mm a").format("HH:mm");
 
-    this.holiday.start = moment(fromDate.toString() + ' ' + startTime.toString() + ' +0000', "YYYY-MM-DD HH:mm Z")
-    this.holiday.end = moment(toDate.toString() + ' ' + endTime.toString() + ' +0000', "YYYY-MM-DD HH:mm Z")
+      var fromDate = moment(this.holiday.fromdate.toString(), "D, MMM yyyy").format("YYYY-MM-DD");
+      var toDate = moment(this.holiday.todate.toString(), "D, MMM yyyy").format("YYYY-MM-DD");
+      var startTime = moment(this.holiday.fromtime.toString(), "h:mm a").format("HH:mm");
+      var endTime = moment(this.holiday.totime.toString(), "h:mm a").format("HH:mm");
+
+      this.holiday.start = moment(fromDate.toString() + ' ' + startTime.toString() + ' +0000', "YYYY-MM-DD HH:mm Z")
+      this.holiday.end = moment(toDate.toString() + ' ' + endTime.toString() + ' +0000', "YYYY-MM-DD HH:mm Z")
 
 
 
-    this.holiday.allDay = false;
-    this.holiday.isHoliday = true;
-    this.holiday.UserId = this.getCurrentUser()._id;
-    this.holiday.PhysicianId = this.getCurrentUser()._id;
+      this.holiday.allDay = false;
+      this.holiday.isHoliday = true;
+      this.holiday.UserId = this.getCurrentUser()._id;
+      this.holiday.PhysicianId = this.getCurrentUser()._id;
 
       if (this.holiday._id) {
         this.Holidays.update({ id: this.holiday._id }, this.holiday).$promise.then(() => {
@@ -76,9 +80,9 @@ class HolidaysController {
     if (!holiday._id) return;
     this.editHoliday({});
     this.Holidays.delete({ id: holiday._id })
-      .$promise.then(function(response) {
-        Materialize.toast('Holiday deleted.', 2000, '', function() { });
-      }, function(error) { 
+      .$promise.then(function (response) {
+        Materialize.toast('Holiday deleted.', 2000, '', function () { });
+      }, function (error) {
         Materialize.toast('Sorry, Something went wrong.', 2000, '', function () { });
         if (error.data.errors) {
           var err = error.data.errors;
@@ -97,7 +101,7 @@ class HolidaysController {
       this.holiday.todate = moment(this.holiday.end.toString(), "YYYY-MM-DD").format("D, MMM YYYY");
       this.holiday.fromtime = moment(this.holiday.start.toString(), "YYYY-MM-DD HH:mm").format("h:mm a");
       this.holiday.totime = moment(this.holiday.end.toString(), "YYYY-MM-DD HH:mm").format("h:mm a");
-      
+
       this.holiday.allDay = false;
     }
   }
@@ -105,8 +109,8 @@ class HolidaysController {
 
 angular.module('eventx')
   .controller('HolidaysController', HolidaysController);
-angular.module('eventx').filter('UTCToNow', function() {
-    return function(input, format) {
-      return moment.utc(input).format('dddd, MMMM Do YYYY, h:mmA');
-    }
-  });
+angular.module('eventx').filter('UTCToNow', function () {
+  return function (input, format) {
+    return moment.utc(input).format('dddd, MMMM Do YYYY, h:mmA');
+  }
+});

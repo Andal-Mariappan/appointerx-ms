@@ -4,25 +4,25 @@
 
   class AppointmentCtrl {
 
-    constructor($timeout, $rootScope, $state,$filter, socket, AppointmentService, Auth) {
+    constructor($timeout, $rootScope, $state, $filter, socket, AppointmentService, Auth) {
       var vm = this;
-      vm.appointments = [];
-      vm.isAdmin = Auth.isAdmin;
+      this.appointments = [];
+      this.isAdmin = Auth.isAdmin;
       this.AppointmentService = AppointmentService;
       $rootScope.$state = $state;
-      vm.getCurrentUser = Auth.getCurrentUser;
-      vm.defaultMode = 'card'
-      vm.curPage = 0;
-      vm.pageSize = 12;
+      this.getCurrentUser = Auth.getCurrentUser;
+      this.defaultMode = 'card'
+      this.curPage = 0;
+      this.pageSize = 12;
 
 
-      vm.numberOfPages = function () {
+      this.numberOfPages = function () {
         var myFilteredData = $filter('daterange')(vm.appointments, vm.startDate, vm.endDate)
         if (myFilteredData) {
           return Math.ceil(myFilteredData.length / vm.pageSize);
         } else {
           return Math.ceil(vm.appointments.length / vm.pageSize);
-        }  
+        }
         //return Math.ceil(vm.appointments.length / vm.pageSize);
       };
 
@@ -70,7 +70,12 @@
     }
 
 
-
+    clearFilter() {
+      this.curPage = 0;
+      this.pageSize = 12;
+      this.startDate = null;
+      this.endDate = null;
+    }
 
     setAppointmentStatus(app) {
 
@@ -113,60 +118,60 @@
         }
         return [];
       };
-    }).filter('daterange', function() {
-    return function(items, startDate, endDate) {
+    }).filter('daterange', function () {
+      return function (items, startDate, endDate) {
         var filteredResult = [];
         // Take action if the filter elements are filled
         if (startDate && endDate) {
-                  
+
           items.forEach(function (item) {
-            
-             var appStart = moment(new Date(item.start)).format("DD-MM-YYYY"); 
+
+            var appStart = moment(new Date(item.start)).format("DD-MM-YYYY");
             var appEnd = moment(new Date(item.end)).format("DD-MM-YYYY");
             var s = moment(new Date(startDate)).format("DD-MM-YYYY");
             var e = moment(new Date(endDate)).format("DD-MM-YYYY");
 
-             
-             console.log(appStart,e,appEnd,s);
-             console.log(appStart >= s);
-             console.log(appEnd <= e);
+
+            console.log(appStart, e, appEnd, s);
+            console.log(appStart >= s);
+            console.log(appEnd <= e);
 
             // console.log(appEnd.isBefore(e) && appStart.isAfter(s) || (appStart.isSame(s) || appEnd.isSame(e)));
             //console.log(appStart.isBefore(s) ,appEnd.isAfter(e)); 
 
 
-             if (appStart >= s && appEnd <= e ) {
-                    filteredResult.push(item);
-                }
-            });
+            if (appStart >= s && appEnd <= e) {
+              filteredResult.push(item);
+            }
+          });
 
         } else {
-            return items; // By default, show the regular table data
+          return items; // By default, show the regular table data
         }
 
         return filteredResult;
-    }
-});
-    // .filter('daterange', function () {
-    //   return function (appointments, start_date, end_date) {
-    //     var result = [];
+      }
+    });
+  // .filter('daterange', function () {
+  //   return function (appointments, start_date, end_date) {
+  //     var result = [];
 
-    //     // date filters
-    //     var start_date = (start_date && !isNaN(Date.parse(start_date))) ? Date.parse(start_date) : 0;
-    //     var end_date = (end_date && !isNaN(Date.parse(end_date))) ? Date.parse(end_date) : new Date().getTime();
+  //     // date filters
+  //     var start_date = (start_date && !isNaN(Date.parse(start_date))) ? Date.parse(start_date) : 0;
+  //     var end_date = (end_date && !isNaN(Date.parse(end_date))) ? Date.parse(end_date) : new Date().getTime();
 
-    //     // if the conversations are loaded
-    //     if (appointments && appointments.length > 0) {
-    //       $.each(appointments, function (index, appointment) {
-    //         var appointmentStart = new Date(appointment.start);
-    //         var appointmentEnd = new Date(appointment.end);
+  //     // if the conversations are loaded
+  //     if (appointments && appointments.length > 0) {
+  //       $.each(appointments, function (index, appointment) {
+  //         var appointmentStart = new Date(appointment.start);
+  //         var appointmentEnd = new Date(appointment.end);
 
-    //         if (appointmentStart >= start_date && appointmentEnd <= end_date ) {
-    //           result.push(appointment);
-    //         }
-    //       });
-    //       return result;
-    //     }
-    //   };
-    // });
+  //         if (appointmentStart >= start_date && appointmentEnd <= end_date ) {
+  //           result.push(appointment);
+  //         }
+  //       });
+  //       return result;
+  //     }
+  //   };
+  // });
 })();

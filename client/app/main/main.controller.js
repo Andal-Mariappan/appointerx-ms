@@ -14,7 +14,7 @@
 			this.isAdmin = Auth.isAdmin;
 			this.getCurrentUser = Auth.getCurrentUser;
 			this.currentRole = this.getCurrentUser().role;
-			this.view = this.currentRole==='patient' ? "agendaDay" : "month,agendaWeek,agendaDay"
+			this.view = this.currentRole==='patient' ? "month,agendaDay" : "month,agendaWeek,agendaDay"
 			this.defaultView = "agendaDay"
 			this.currentDate = moment().format("dddd, MMMM Do YYYY");
 			this.onChange = function () {
@@ -32,7 +32,7 @@
 
 			this.filter_Calendar = function () {
 				getPhysician(this.physician);
-				// getShifts(this.physician);
+				getShifts(this.physician);
 			}
 			User.getPhysicians().$promise.then(response => {
 				this.physicians = response;

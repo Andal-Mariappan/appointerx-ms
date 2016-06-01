@@ -2559,3 +2559,8 @@ th {
   pointer-events: none;
   color: grey;
 }
+.pagenumber {
+  font-size: 12px;
+    margin-top: 11%;
+    margin-right: -60px;
+}

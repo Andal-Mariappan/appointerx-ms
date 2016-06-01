@@ -23,11 +23,10 @@ class LoginController {
       })
         .then((user) => {
           // Logged in, redirect to home
-          console.log(user);
           if (user && (user.role === "physician" || user.role === "admin")) {
             this.$state.go('dashboard');
           }
-          else { this.$state.go('main'); }
+          else { this.$state.go('appointment'); }
         })
         .catch(err => {
           this.errors.other = err.message;
