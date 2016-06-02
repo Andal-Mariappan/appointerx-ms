@@ -40,7 +40,7 @@ angular.module('eventx').directive('fullCalendar', function ($log, $timeout, $co
         lang: 'en',
         editable: true,
         draggable: true,
-        selectable: false,
+        selectable: true,
         selectHelper: true,
         unselectAuto: false,
         eventOverlap: false,
