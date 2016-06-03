@@ -5,34 +5,12 @@
       <div class="col s3 left">
         <h5 class="breadcrumbs-title">Appointment List</h5>
         <ol class="breadcrumbs"></ol>
-        <!--<label for="sdate" class="">Start</label>
-        <input type="date" id="sdate" class="datepicker" ng-model="startDate" />
-        <label for="edate" class="">End</label>
-        <input type="date" id="edate" class="datepicker" ng-model="endDate" />-->
-        <!--<div class="pagination pagination-centered" ng-show="app.appointments.length">
-<ul class="pagination-controle pagination">
- <li>
-  <button type="button" class="btn btn-primary" ng-disabled="app.curPage === 0"
- ng-click="app.curPage=app.curPage-1"> &lt; PREV</button>
- </li>
- <li>
- <span>Page {{app.curPage + 1}} of {{ app.numberOfPages() }}</span>
- </li>
- <li>
- <button type="button" class="btn btn-primary"
- ng-disabled="app.curPage >= app.appointments.length/app.pageSize - 1"
- ng-click="app.curPage = app.curPage+1">NEXT &gt;</button>
- </li>
-</ul>
-</div>-->
       </div>
-
       <div class="col s12 m12 l5">
         <div class="row">
           <div class="input-field col s4">
             <label for="sdate" class="">Start</label>
             <input type="date" id="sdate" class="datepicker" ng-model="app.startDate" />
-
           </div>
           <div class="input-field col s4">
             <label for="edate" class="">End</label>
@@ -45,9 +23,7 @@
           </div>
         </div>
       </div>
-
-
-
+      
       <div class="col s12 m6 l4 breadcrumbs-title right">
         <!--<p class="left">Page {{app.curPage + 1}} of {{ app.numberOfPages()}}  app.curPage >= app.appointments.length/app.pageSize - 1</p>-->
         <a href="" class="btn waves-effect waves-light indigo" tooltipped data-position="bottom" data-delay="50" data-tooltip="Card View"

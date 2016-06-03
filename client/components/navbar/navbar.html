@@ -1,6 +1,6 @@
 
 <!-- START HEADER -->
-  <header id="header" class="page-topbar" ng-if="nav.isLoggedIn() && $state.current.name !== 'dashboard'">
+  <header id="header" class="page-topbar" ng-if="nav.isLoggedIn()">
         <!-- start header nav-->
         <div class="navbar-fixed">
             <nav class="navbar-color indigo darken-1">
@@ -15,7 +15,7 @@
                           <li><a href="/">AppointerX</a></li>
                     </ul>
                     <ul class="s12 right">                      
-                      <li><a href="/settings">Welcome, {{ nav.getCurrentUser().first_name }} {{ nav.getCurrentUser().last_name }}</a></li>
+                      <li><a href="/settings" ng-if="nav.userName">Welcome, {{ nav.userName }}</a></li>
                     </ul>
                 </div>
             </nav>

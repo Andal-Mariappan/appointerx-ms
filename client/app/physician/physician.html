@@ -21,13 +21,18 @@
             </div>
           <div class="container">
             <div class="row">
-              <div class="col s12 m12 l12">
-                <h5 class="breadcrumbs-title">Physicians Listing</h5>
+              <div class="col s12 m12 l7">
+                <h5 class="breadcrumbs-title">Physicians</h5>
                 <ol class="breadcrumbs">
                     <li><a href="/">Home</a></li>
-                    <li class="active">Events</li>
+                    <li class="active">Physicians</li>
                 </ol>
               </div>
+               <div class="input-field col s5">
+                    <i ng-class="{'active':focus}" class="mdi-action-search prefix"></i>
+                    <input id="search" type="text" ng-model="search_events">
+                    <label for="search" ng-class="{'active':focus}">Search by name</label>
+                </div>
             </div>
           </div>
         </div>
@@ -36,24 +41,6 @@
         <!--start container-->
         <div class="container">
           <div class="section">
-             <div class="row">
-                 <div class="col s6"><p class="caption"></p></div>
-                    <div class="input-field col s5">
-                    <i ng-class="{'active':focus}" class="mdi-action-search prefix"></i>
-                    <input id="search" type="text" ng-model="search_events">
-                    <label for="search" ng-class="{'active':focus}">Search by name</label>
-                </div>
-                <!-- <div class="col s1">
-                    <a href="#" data-activates="new-event-out" class="new-event-collapse"></a>
-                    <a href="#" ng-click="openForm()" data-position="bottom" data-delay="5" data-tooltip="Add new" class="tooltipped task-add btn-floating btn-large waves-effect waves-light "><i class="mdi-content-add"></i></a>
-                </div> -->
-             </div>
-           <!--  <table>
-	<tr ng-repeat="p in physicians">
-			<td>{{p}}</td>
-	</tr>
-</table> -->
-            <div class="divider"></div>
             <div class="col s12">
                 <div class="row">
                 <section class="plans-container" id="plans">

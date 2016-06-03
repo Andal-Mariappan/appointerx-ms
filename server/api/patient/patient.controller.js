@@ -82,7 +82,8 @@ export function index(req, res) {
 export function show(req, res) {
   return User.find({
     where: {
-      _id: req.params.id
+      _id: req.params.id,
+      "role": "patient"
     }
   })
     .then(handleEntityNotFound(res))

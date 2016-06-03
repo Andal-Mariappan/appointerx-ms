@@ -6,6 +6,6 @@ angular.module('eventx')
       .state('patient', {
         url: '/patient',
         templateUrl: 'app/patient/patient.html',
-         controller: PatientComponent
+         controller: 'PatientComponent'
       });
   });

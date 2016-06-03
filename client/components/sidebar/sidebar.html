@@ -29,6 +29,9 @@
             </li>
             <li class="bold" ng-class="{active:$state.current.name === 'appointment'}"><a ui-sref="appointment" class="waves-effect waves-cyan"><i class="mdi-editor-insert-invitation"></i> Appointments</a>
             </li>
+            <li class="bold" ng-class="{active:$state.current.name === 'patient'}"><a ui-sref="patient" class="waves-effect waves-cyan"><i class="mdi-editor-insert-invitation"></i> Patients</a>
+            </li>
+            
             <li class="bold" ng-if="side.isAdmin===true" ng-class="{active:$state.current.name === 'physician'}"><a ui-sref="physician" class="waves-effect waves-cyan"><i class="mdi-action-note-add"></i> Physicians</a>
             </li>
             <li class="bold" ng-if="side.isAdmin===true || side.getCurrentUser().role==='physician'" ng-class="{active:$state.current.name === 'shifts'}"><a ui-sref="shifts" class="waves-effect waves-cyan"><i class="mdi-action-note-add"></i> Shifts</a>
