@@ -17,6 +17,7 @@ var db = {
 
 
 // Insert models below
+db.Patient = db.sequelize.import('../api/patient/patient.model');
 
 db.Shifts = db.sequelize.import('../api/shifts/shifts.model');
 db.Appointment = db.sequelize.import('../api/appointment/appointment.model');

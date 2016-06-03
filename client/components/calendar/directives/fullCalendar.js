@@ -18,8 +18,13 @@ angular.module('eventx').directive('fullCalendar', function ($log, $timeout, $co
     });
     
     var alertOnEventClick = function (date, jsEvent, view) {
+      console.log(date,scope.currentUser);
       if (date.isHoliday) { return false; }
       if (date.url) { return false; }
+      if (date.PatientId != scope.currentUser._id) {
+        Materialize.toast("You can't view other's details.", 2000, '', function () { });
+        return false;
+      }
       $('.event-collapse').sideNav('show');
       scope.focus = true;
       $timeout(function () {

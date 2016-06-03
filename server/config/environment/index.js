@@ -41,7 +41,7 @@ var all = {
       pool: { maxIdleTime: 10000, maxConnections: 5, minConnections: 2},
 			storage: {},
 			PORT: 3000, // capital PORT allows auto override by common env variable if it exists
-			FORCE_DB_SYNC: "true",// must be string to allow environment variable override
+			FORCE_DB_SYNC: "false",// must be string to allow environment variable override
 			enableSequelizeLog: "true", // type chosen as string for no particular reason
 			expressSessionSecret: '$uper$ecret$e$$ionKey' // replace with your own in production
 		}
