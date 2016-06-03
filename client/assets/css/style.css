@@ -2564,3 +2564,132 @@ th {
     margin-top: 11%;
     margin-right: -60px;
 }
+
+/*card designs*/
+.card-date {
+  font-size: 13px;
+}
+
+.pulse {
+  display: block;
+  position: absolute;
+  background: #555;
+  border-radius: 100%;
+  -moz-transform: scale(0);
+  -ms-transform: scale(0);
+  -o-transform: scale(0);
+  -webkit-transform: scale(0);
+  transform: scale(0);
+  /*animation effect*/
+  z-index: 100;
+}
+
+.pulse.animate {
+  -moz-animation: ripple 0.65s linear;
+  -o-animation: ripple 0.65s linear;
+  -webkit-animation: ripple 0.65s linear;
+  animation: ripple 0.65s linear;
+}
+
+@keyframes ripple {
+  
+  100% {
+    opacity: 0;
+    -moz-transform: scale(2.5);
+    -ms-transform: scale(2.5);
+    -o-transform: scale(2.5);
+    -webkit-transform: scale(2.5);
+    transform: scale(2.5);
+  }
+}
+
+.filtered .notification:before {
+  position: absolute;
+  font-family: FontAwesome;
+  top: -1px;
+  right: 10px;
+  color: #4285f4;
+  font-size: 20px;
+  content: "\f0b0";
+}
+
+.filtered.invalid .notification:before {
+  position: absolute;
+  font-family: FontAwesome;
+  top: -1px;
+  right: 10px;
+  color: #fc1501;
+  font-size: 20px;
+  content: "\f06a";
+}
+
+.state.row {
+  margin-bottom: 3px;
+}
+
+.state .circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  float: left;
+  margin: 5px 15px 5px 0px;
+}
+
+body {
+  background: white;
+}
+
+.deck {
+  background: #fafafb;
+  width: 345px;
+  padding: 5px;
+  height: 100%;
+  position: absolute;
+  left: -15px;
+  padding-top: 0px;
+}
+
+.preloader-wrapper.small {
+  right: -12px;
+  width: 20px;
+  height: 20px;
+  top: 2px;
+}
+
+.summary .card-content {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin-bottom: -5px;
+}
+
+.label {
+  float: left;
+}
+
+.value {
+  float: right;
+  color: #8BC34A;
+}
+
+.card .card-title {
+  font-size: 20px;
+}
+
+.graph {
+  padding-top: 5px;
+  padding-left: 12px;
+  padding-right: 12px;
+  font-size: 12px;
+  padding-bottom: 28px;
+}
+
+.graph .bar {
+  float: left;
+  height: 12px;
+  -webkit-transition: width 1s;
+  -moz-transition: width 1s;
+  -o-transition: width 1s;
+  transition: width 1s;
+}
+
+/*card designs end*/

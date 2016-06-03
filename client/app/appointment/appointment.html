@@ -3,8 +3,11 @@
   <div class="container">
     <div class="row">
       <div class="col s3 left">
-        <h5 class="breadcrumbs-title">Appointment List</h5>
-        <ol class="breadcrumbs"></ol>
+        <h5 class="breadcrumbs-title">Appointments</h5>
+          <ol class="breadcrumbs">
+            <li><a href="/">Home</a></li>
+            <li class="active">Appointment</li>
+          </ol>
       </div>
       <div class="col s12 m12 l5">
         <div class="row">
@@ -43,23 +46,56 @@
 </div>
 <div class="row box-one" ng-show="app.defaultMode==='card'">
   <div class="col s12 m6 l3" ng-repeat="appointment in app.appointments |orderBy: appointment.start:true | pagination: app.curPage * app.pageSize | limitTo: app.pageSize | daterange:app.startDate:app.endDate">
-    <div class="card-panel" ng-class="appointment.className">
+    <div class="card" ng-class="appointment.className">
       <div class="row">
-        <div class="col s4"><img src="assets/images/profile.png" alt="" class="circle responsive-img"></div>
+        <div class="col s4 right" style="margin-top:2%;">
+          <img src="assets/images/profile.png" alt="" class="circle responsive-img">
+          <!--<a class="right" ng-if="appointment.status==='Done'"><i class="white-text small mdi-action-alarm-on"></i></a>-->
+          </div>
+        
         <div class="col s8">
-          <span class="white-text">{{appointment.title}}</span>
+          <span class="white-text card-title">{{appointment.title}}</span>
           <p class="white-text">+1234444444</p>
         </div>
       </div>
+      <div class="divider"></div>
       <div class="row">
         <div class="col s12">
-          <p class="white-text">From : {{appointment.start | UTCToNow}}</p>
-          <p class="white-text">End : {{appointment.end | UTCToNow}}</p>
+          <p class="white-text card-date">{{appointment.start | UTCToNow}}</p>
+          <!--<div class="preloader-wrapper small right">
+            <div class="spinner-layer spinner-blue-only">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div>
+              <div class="gap-patch">
+                <div class="circle"></div>
+              </div>
+              <div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+          </div>-->
         </div>
       </div>
     </div>
+      <!--<div class="card property  date hoverable waves-effect waves-block" ng-class="appointment.className">
+        <div class="card-content">
+          <span class="card-title white-text">{{appointment.title}}</span>
+          <div class="preloader-wrapper  right">
+            <img src="assets/images/profile.png" alt="" class="circle responsive-img">
+          </div>
+          <div class="container" data-bind="">
+						<div class="row">
+              <p class="white-text">+1234444444</p>
+              <p class="white-text">{{appointment.start | UTCToNow}}</p>
+						</div>
+          </div>
+        </div>
+      </div>-->
   </div>
 </div>
+
+
 <div class="row box-one" ng-show="app.defaultMode==='list'">
   <div class="col s12">
     <div class="card-panel">
@@ -94,6 +130,16 @@
     </div>
   </div>
 
+</div>
+
+<div class="row box-one">
+  <div class="col s12">
+    <div id="card-alert" class="card light-blue" ng-if="app.appointments.length===0">
+      <div class="card-content white-text">
+        <p><i class="mdi-action-info-outline"></i> No Appointments</p>
+      </div>
+    </div>
+  </div>
 </div>
 <script>
   $(document).ready(function(){
