@@ -2219,7 +2219,8 @@ h5.breadcrumbs-header {
 /* Styling for each event from Schedule */
 .fc-time-grid-event.fc-v-event.fc-event {
   border-radius: 4px;
-  right: 5% !important;
+  margin-right: -2.5%;
+  /*right: 5% !important;*/
 }
 
 /* Remove the header border from Schedule */

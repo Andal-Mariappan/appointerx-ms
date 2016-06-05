@@ -13,7 +13,7 @@
                           <li><a href="/">AppointerX</a></li>
                     </ul>
                     <ul class="s12 right">                      
-                      <li><a href="/settings" ng-if="nav.userName">Welcome, {{ nav.userName }}</a></li>
+                      <li><a href="/settings" ng-if="nav.userName">Welcome, {{ nav.getCurrentUser().first_name }} {{ nav.getCurrentUser().last_name }}</a></li>
                     </ul>
                 </div>
                 <div class="nav-wrapper hide-on-large-only hide-on-small-only">
@@ -25,7 +25,7 @@
                           <li style="margin-left: -24px;margin-top: -1px;"><a href="/">AppointerX</a></li>
                     </ul>
                     <ul class="s12 right">                      
-                      <li><a href="/settings" ng-if="nav.userName">Welcome, {{ nav.userName }}</a></li>
+                      <li><a href="/settings" ng-if="nav.userName">Welcome, {{ nav.getCurrentUser().first_name }} {{ nav.getCurrentUser().last_name }}</a></li>
                     </ul>
                 </div>
                 <div class="nav-wrapper hide-on-med-and-up">
@@ -37,7 +37,7 @@
                           <li style="margin-left: -24px;margin-top: -1px;"><a href="/">AppointerX</a></li>
                     </ul>
                     <ul class="s12 right">                      
-                      <li><a href="/settings" ng-if="nav.userName">Welcome, {{ nav.userName }}</a></li>
+                      <li><a href="/settings" ng-if="nav.userName">Welcome, {{ nav.getCurrentUser().first_name }} {{ nav.getCurrentUser().last_name }}</a></li>
                     </ul>
                 </div>
             </nav>

@@ -108,7 +108,7 @@
                     </div>
                     <div class="input-field col s6">
                       <i class="mdi-action-verified-user prefix"></i>
-                      <input id="age" type="number" numbers-only class="validate" ng-model="vm.user.birthdate">
+                      <input id="age" type="number" numbers-only class="validate" ng-model="vm.user.age">
                       <label for="age">Age</label>
                     </div>
                   </div>
@@ -116,11 +116,11 @@
                   <div class="row">
                     <div class="input-field col s6">
                       <i class="mdi-communication-email prefix"></i>
-                      <input id="email" name="email" type="email" class="validate" ng-model="vm.user.email" required>
-                      <label for="email">Email*</label>
-                      <div class="errorTxt1" ng-show="form.email.$error.required && vm.submittedProfileform" >
+                      <input id="email" name="email" type="email" ng-model="vm.user.email" readonly>
+                      <label for="email">Email</label>
+                      <!--<div class="errorTxt1" ng-show="form.email.$error.required && vm.submittedProfileform" >
                         <div id="uname-error" class="error">Email address is required</div>
-                      </div>
+                      </div>-->
                       <!--<div class="errorTxt1" ng-show="form.email.$error.cemail && vm.submittedProfileform" ><div id="uname-error" class="error">Please provide valid email</div></div>-->
                     </div>
 
@@ -143,7 +143,7 @@
                   <div class="row" ng-if="vm.user.role==='physician'">
                     <div class="input-field col s6">
                       <i class="mdi-editor-mode-edit prefix"></i>
-                      <input type="text" name="npi" class="form-control" ng-model="vm.user.npi" ng-minlength="10" ng-maxlength="10" required/>
+                      <input  id="npi" type="text" name="npi" class="form-control" ng-model="vm.user.npi" ng-minlength="10" ng-maxlength="10" required/>
                       <label for="npi">NPI*</label>
                       <div class="errorTxt1" ng-show="form.npi.$error.required && vm.submittedProfileform" >
                         <div id="uname-error" class="error">NPI is required</div>
@@ -154,31 +154,31 @@
                     </div>
                     <div class="input-field col s6">
                       <i class="mdi-editor-mode-edit prefix"></i>
-                      <input type="text" name="location" class="form-control" ng-model="vm.user.location" />
+                      <input id="location" type="text" name="location" class="form-control" ng-model="vm.user.location" />
                       <label for="location">Location</label>
                     </div>
                   </div>
                   <div class="row" ng-if="vm.user.role==='physician'">
                     <div class="input-field col s6">
                       <i class="mdi-editor-mode-edit prefix"></i>
-                      <input type="text" name="address1" class="form-control" ng-model="vm.user.addresss1" />
+                      <input id="address1" type="text" name="address1" class="form-control" ng-model="vm.user.addresss1" />
                       <label for="address1">address1</label>
                     </div>
                     <div class="input-field col s6">
                       <i class="mdi-editor-mode-edit prefix"></i>
-                      <input type="text" name="address2" class="form-control" ng-model="vm.user.address2" />
+                      <input id="address2" type="text" name="address2" class="form-control" ng-model="vm.user.address2" />
                       <label for="address2">address2</label>
                     </div>
                   </div>
                   <div class="row" ng-if="vm.user.role==='physician'">
                     <div class="input-field col s6">
                       <i class="mdi-editor-mode-edit prefix"></i>
-                      <input type="text" name="city" class="form-control" ng-model="vm.user.city" />
+                      <input id="city" type="text" name="city" class="form-control" ng-model="vm.user.city" />
                       <label for="city">City</label>
                     </div>
                     <div class="input-field col s6">
                       <i class="mdi-editor-mode-edit prefix"></i>
-                      <input type="text" name="zip" class="form-control" ng-model="vm.user.zip" required/>
+                      <input type="text" id="zip" name="zip" class="form-control" ng-model="vm.user.zip" required/>
                       <label for="zip">Pincode*</label>
                     </div>
                   </div>
@@ -186,12 +186,12 @@
                   <div class="row" ng-if="vm.user.role==='physician'">
                     <div class="input-field col s6">
                       <i class="mdi-editor-mode-edit prefix"></i>
-                      <input type="text" name="state" class="form-control" ng-model="vm.user.state" />
+                      <input id="state" type="text" name="state" class="form-control" ng-model="vm.user.state" />
                       <label for="state">State</label>
                     </div>
                     <div class="input-field col s6">
                       <i class="mdi-editor-mode-edit prefix"></i>
-                      <input type="text" name="country" class="form-control" ng-model="vm.user.country" />
+                      <input id="country" type="text" name="country" class="form-control" ng-model="vm.user.country" />
                       <label>Country</label>
                     </div>
                   </div>

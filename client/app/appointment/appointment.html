@@ -62,6 +62,7 @@
       <div class="row">
         <div class="col s12">
           <p class="white-text card-date">{{appointment.start | UTCToNow}}</p>
+          <span class="task-cat cyan">{{appointment.status}}</span>
           <!--<div class="preloader-wrapper small right">
             <div class="spinner-layer spinner-blue-only">
               <div class="circle-clipper left">
@@ -134,7 +135,7 @@
 
 <div class="row box-one">
   <div class="col s12">
-    <div id="card-alert" class="card light-blue" ng-if="app.appointments.length===0">
+    <div id="card-alert" class="card light-blue" ng-if="app.noRecords">
       <div class="card-content white-text">
         <p><i class="mdi-action-info-outline"></i> No Appointments</p>
       </div>

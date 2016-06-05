@@ -21,7 +21,7 @@ angular.module('eventx').directive('fullCalendar', function ($log, $timeout, $co
       console.log(date,scope.currentUser);
       if (date.isHoliday) { return false; }
       if (date.url) { return false; }
-      if (date.PatientId != scope.currentUser._id) {
+      if (date.PatientId != scope.currentUser._id && scope.currentUser.role==='patient') {
         Materialize.toast("You can't view other's details.", 2000, '', function () { });
         return false;
       }
@@ -39,6 +39,21 @@ angular.module('eventx').directive('fullCalendar', function ($log, $timeout, $co
         };
       });
     };
+    
+    // var date = new Date();
+    //  var d = date.getDate();
+    //  var m = date.getMonth();
+    //  var y = date.getFullYear();
+ 
+    //  var monthSource = new Object();
+    //  monthSource.title = 'I am vacation'; // this should be string
+    //  monthSource.start = new Date(y, m, d, 9, 0); // this should be date object
+    //  monthSource.end = new Date(y, m, d + 2, 9, 30);
+    //  monthSource.className = 'red';
+    //  monthSource.isHoliday = true;
+ 
+    //  var month = new Array();
+    //  month[0] = monthSource;
     
     function initCalendar() {
       calendar = $calendar.fullCalendar({
@@ -96,41 +111,6 @@ angular.module('eventx').directive('fullCalendar', function ($log, $timeout, $co
           scope.draggedAppointment();
 
         },
-        // timeFormat: 'H(:mm)',
-        drop: function (date, jsEvent, ui, resourceId) {
-          // this function is called when something is dropped
-          // retrieve the dropped element's stored Event Object
-          var originalEventObject = $(this).data('eventObject');
-
-          // we need to copy it, so that multiple events don't have a reference to the same object
-          var copiedEventObject = $.extend({}, originalEventObject);
-
-          var defaultDuration = moment.duration($('#calendar').fullCalendar('option', 'defaultTimedEventDuration'));
-          var end = date.clone().add(defaultDuration); // on drop we only have date given to us
-
-
-
-          copiedEventObject.start = date.format();
-          copiedEventObject.end = end.format();
-          copiedEventObject.allDay = false;
-
-          // render the event on the calendar
-          // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
-          $('#calendar').fullCalendar('renderEvent', copiedEventObject, false);
-
-          // is the "remove after drop" checkbox checked?
-          if ($('#drop-remove').is(':checked')) {
-            // if so, remove the element from the "Draggable Events" list
-            // $(this).remove();
-            // $log.log($(this).scope());
-            var index = $(this).scope().$index;
-            $("#external-events").scope().eventsExternal.splice(index, 1);
-            $(this).remove();
-          }
-          scope.newEvent = angular.copy(copiedEventObject);
-          scope.draggedAppointment();
-        },
-
         select: function (start, end, allDay) {
           scope.newEvent = {};
            scope.newEvent.icon = 'mdi-action-event';
@@ -154,9 +134,7 @@ angular.module('eventx').directive('fullCalendar', function ($log, $timeout, $co
               // console.log(scope.events);
               callback(scope.events);
             }
-          }
-          // ,
-          // month
+          },scope.holidays
           ],
         // events: scope.events,.fc-widget-content
         // events: function(start, end, timezone, callback) {
@@ -214,21 +192,30 @@ angular.module('eventx').directive('fullCalendar', function ($log, $timeout, $co
     }, true);
 
     scope.$watch("slots", function (newValue, oldValue) {
-       
-      // var newArr = _.map(scope.slots, function(o) { return _.omit(o, '_id'); });
-      // scope.slots =angular.copy(newArr);
-      // console.log(scope.slots);
       if (newValue != oldValue) {
         scope.view = scope.view;
         $('#calendar').fullCalendar('destroy');
         initCalendar();
       }
     }, true);
+    
+    
+    scope.$watch("holidays", function (newValue, oldValue) {
+      if (newValue != oldValue) {
+         scope.holidays=scope.holidays;
+         console.log(scope.holidays);
+        $('#calendar').fullCalendar('destroy');
+        initCalendar();
+      }
+    }, true);
+    
 
     $timeout(function () {
       console.log(scope.slots);
       scope.slots = scope.slots;
       scope.view = scope.view;
+      scope.holidays=scope.holidays;
+      console.log(scope.holidays);
       initCalendar();
     });
 
@@ -241,7 +228,8 @@ angular.module('eventx').directive('fullCalendar', function ($log, $timeout, $co
     scope: {
       events: "=events",
       slots: "=slots",
-      view:"=view"
+      view:"=view",
+      holidays:"=holidays"
     },
     controller: 'CalendarCtrl',
     link: lnk

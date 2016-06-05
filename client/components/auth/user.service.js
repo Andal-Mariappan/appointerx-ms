@@ -12,6 +12,7 @@
 					controller: 'password'
 				}
 			},
+			 update: {method:'PUT', params: {id: '@_id'},isArray: false},
 			forgotPassword: {
 				url: 'api/users/forgot',
 				method: 'PUT'

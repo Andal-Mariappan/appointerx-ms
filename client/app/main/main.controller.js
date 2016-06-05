@@ -4,7 +4,7 @@
 
 	class MainController {
 
-		constructor($http, $scope, $compile, $timeout, socket, Auth, AppointmentService, User, Shifts) {
+		constructor($http, $scope, $compile, $timeout, socket, Auth, AppointmentService, User, Shifts,Holidays) {
 			var vm = this;
 			this.$http = $http;
 			this.awesomeThings = [];
@@ -33,12 +33,14 @@
 			this.filter_Calendar = function () {
 				getPhysician(this.physician);
 				getShifts(this.physician);
+				getHolidays(this.physician);
 			}
 			User.getPhysicians().$promise.then(response => {
 				this.physicians = response;
 				this.physician = response[0]._id;
 				getPhysician(this.physician);
 				getShifts(this.physician);
+				getHolidays(this.physician);
 			});
 
 			function getPhysician(physicianId) {
@@ -57,13 +59,25 @@
 					// give pure json object instead of $resource
 					var newArr = JSON.parse(angular.toJson(shifts));
 					vm.slots = _.map(newArr, function (o) { return _.omit(o, '_id'); });
-
 					setShifts();
-
-
 					socket.syncUpdates('shifts', vm.slots);
 				});
 			}
+			
+			function getHolidays(physicianId, cb) {
+				Holidays.holidayByDocId({
+					docId: physicianId
+				}).$promise.then(function (holidays) {
+					// give pure json object instead of $resource
+					console.log(holidays);
+					var newArr = JSON.parse(angular.toJson(holidays));
+					vm.holidays = _.map(newArr, function (o) { return _.omit(o, '_id'); });
+					console.log(vm.holidays);
+					socket.syncUpdates('appointment', vm.holidays);
+				});
+			}
+			
+			
 			function setShifts() {
 				var cnt = 1;
 				$scope.shift = {};
@@ -94,13 +108,6 @@
 
 				console.log($scope.shift.data);
 			}
-
-
-			// $scope.$watchCollection(function () {
-			// 	return vm.shiftArray;
-			// }, function (value) {
-			// 	vm.shiftArray = value;
-			// });
 
 			this.exportCSV = function () {
 				var dataToExport = [];

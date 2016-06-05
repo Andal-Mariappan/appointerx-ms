@@ -1,16 +1,18 @@
 'use strict';
 
 class SettingsController {
-  constructor(Auth,User, $cookies,$location) {
+  constructor(Auth, User, $cookies, $location) {
     this.errors = {};
     this.submittedPasswordform = false;
     this.submittedProfileform = false;
     this.Auth = Auth;
+    this.User = User;
+
     if ($cookies.get('token') && $location.path() !== '/logout') {
       this.currentUser = User.get();
       this.user = this.currentUser;
       console.log(this.currentUser)
-		}
+    }
   }
 
   changePassword(form) {
@@ -27,28 +29,28 @@ class SettingsController {
         });
     }
   }
-  
+
   updateProfile(form) {
     this.submittedProfileform = true;
-    console.log(form.$valid)
     if (form.$valid) {
-      this.Auth.createUser({
+
+      var user = {
         first_name: this.user.firstname,
         last_name: this.user.lastname,
-        email: this.user.email,
-        // gender: 'male',
-				// mobile: '1234567890',
-				// age: 15,
+        //gender: 'male',
+        mobile: this.user.mobile,
+        age: this.user.age,
         password: this.user.password,
         role: this.user.role,
         npi: this.user.npi,
-        location:this.user.location,
-        addresss1:this.user.addresss1,
-        addresss2:this.user.addresss2,
-        state:this.user.state,
-        zip:this.user.zip,
-        country:this.user.country
-      })
+        location: this.user.location,
+        addresss1: this.user.addresss1,
+        addresss2: this.user.addresss2,
+        state: this.user.state,
+        zip: this.user.zip,
+        country: this.user.country
+      };
+      this.currentUser.$update()
       .then((res) => {
         this.submittedProfileform=false;
         Materialize.toast(res.data || "Profile updated successfully.", 2000, '', function () { });

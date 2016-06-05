@@ -73,6 +73,26 @@
 			},
 
 			/**
+			 * Create a new user
+			 *
+			 * @param  {Object}   user     - user info
+			 * @param  {Function} callback - optional, function(error, user)
+			 * @return {Promise}
+			 */
+			updateUser(user, callback) {
+				return User.update({_id:user._id},user,
+					function(data) {
+						$cookies.put('token', data.token);
+						currentUser = User.get();
+						return safeCb(callback)(null, user);
+					},
+					function(err) {
+						Auth.logout();
+						return safeCb(callback)(err);
+					}).$promise;
+			},
+
+			/**
 			 * Change password
 			 *
 			 * @param  {String}   oldPassword

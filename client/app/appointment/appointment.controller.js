@@ -14,6 +14,7 @@
       this.defaultMode = 'card'
       this.curPage = 0;
       this.pageSize = 12;
+      vm.noRecords=false;
 
 
       this.numberOfPages = function () {
@@ -26,23 +27,6 @@
         //return Math.ceil(vm.appointments.length / vm.pageSize);
       };
 
-      // vm.dateRangeFilter = function (fieldStart, fieldEnd, startDate, endDate) {
-      //   return function (item) {
-      //     if (startDate && endDate) {
-      //       if (item[fieldStart] === null) return false;
-      //       var appStart = moment(item[fieldStart]).format("DD-MM-YYYY");
-      //       var appEnd = moment(item[fieldEnd]).format("DD-MM-YYYY");
-      //       var s = moment(startDate, "D,MMM dddd").format("DD-MM-YYYY");
-      //       var e = moment(endDate, "D,MMM dddd").format("DD-MM-YYYY");
-      //       console.log(vm.appointments.length);
-      //       console.log(appEnd <= e, appEnd, e, appStart);
-      //       if (appStart >= s && appEnd <= e) return true;
-      //       return false;
-      //     }
-      //     return true;
-      //   }
-      // }
-
       vm.getCurrentUser(function (user) {
         vm.currentUser = user;
         vm.appointmentStatus = ['Awaiting', 'Cancel', 'Done'];
@@ -53,6 +37,7 @@
           }).$promise.then(function (response) {
             console.log(response)
             vm.appointments = response;
+            vm.noRecords=response.length===0;
             socket.syncUpdates('appointment', vm.appointments);
           });
         }
@@ -146,26 +131,5 @@
         return filteredResult;
       }
     });
-  // .filter('daterange', function () {
-  //   return function (appointments, start_date, end_date) {
-  //     var result = [];
-
-  //     // date filters
-  //     var start_date = (start_date && !isNaN(Date.parse(start_date))) ? Date.parse(start_date) : 0;
-  //     var end_date = (end_date && !isNaN(Date.parse(end_date))) ? Date.parse(end_date) : new Date().getTime();
-
-  //     // if the conversations are loaded
-  //     if (appointments && appointments.length > 0) {
-  //       $.each(appointments, function (index, appointment) {
-  //         var appointmentStart = new Date(appointment.start);
-  //         var appointmentEnd = new Date(appointment.end);
-
-  //         if (appointmentStart >= start_date && appointmentEnd <= end_date ) {
-  //           result.push(appointment);
-  //         }
-  //       });
-  //       return result;
-  //     }
-  //   };
-  // });
+  
 })();

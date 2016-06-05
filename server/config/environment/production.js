@@ -14,6 +14,6 @@ module.exports = {
 		8080,
 	
 	mysql: {
-    	uri: process.env.CLEARDB_DATABASE_URL || 'mysql://root:Hb@12345@localhost:3306/physician'    
+    	uri: process.env.CLEARDB_DATABASE_URL || 'mysql://root:Mehta@5418@localhost:3306/physician'    
 	}
 };
