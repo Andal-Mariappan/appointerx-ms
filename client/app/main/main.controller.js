@@ -79,15 +79,13 @@
 				Holidays.holidayByDocId({
 					docId: physicianId
 				}).$promise.then(function (holidays) {
-					// give pure json object instead of $resource
-					console.log(holidays);
 					var newArr = JSON.parse(angular.toJson(holidays));
 					vm.holidays = _.map(newArr, function (o) { return _.omit(o, '_id'); });
-					console.log(vm.holidays);
-					socket.syncUpdates('appointment', vm.holidays);
+					//socket.syncUpdates('appointment', vm.holidays);
 				});
 			}
-
+			
+			
 
 			function setShifts() {
 				var cnt = 1;
