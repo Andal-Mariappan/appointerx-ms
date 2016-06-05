@@ -4,7 +4,7 @@
 
 	class MainController {
 
-		constructor($http, $scope, $compile, $timeout, socket, Auth, AppointmentService, User, Shifts,Holidays) {
+		constructor($http, $scope, $compile, $timeout, socket, Auth, AppointmentService, User, Shifts, Holidays) {
 			var vm = this;
 			this.$http = $http;
 			this.awesomeThings = [];
@@ -14,7 +14,7 @@
 			this.isAdmin = Auth.isAdmin;
 			this.getCurrentUser = Auth.getCurrentUser;
 			this.currentRole = this.getCurrentUser().role;
-			this.view = this.currentRole==='patient' ? "month,agendaDay" : "month,agendaWeek,agendaDay"
+			this.view = this.currentRole === 'patient' ? "month,agendaDay" : "month,agendaWeek,agendaDay"
 			this.defaultView = "agendaDay"
 			this.currentDate = moment().format("dddd, MMMM Do YYYY");
 			this.onChange = function () {
@@ -35,13 +35,24 @@
 				getShifts(this.physician);
 				getHolidays(this.physician);
 			}
-			User.getPhysicians().$promise.then(response => {
-				this.physicians = response;
-				this.physician = response[0]._id;
-				getPhysician(this.physician);
-				getShifts(this.physician);
-				getHolidays(this.physician);
-			});
+
+			if (this.currentRole === 'physician' )
+			{
+				getPhysician(this.getCurrentUser()._id);
+				getShifts(this.getCurrentUser()._id);
+				getHolidays(this.getCurrentUser()._id);
+			}
+			else {
+				User.getPhysicians().$promise.then(response => {
+					this.physicians = response;
+					this.physician = response[0]._id;
+					getPhysician(this.physician);
+					getShifts(this.physician);
+					getHolidays(this.physician);
+				});
+			}
+
+
 
 			function getPhysician(physicianId) {
 				AppointmentService.byDocId.query({
@@ -63,7 +74,7 @@
 					socket.syncUpdates('shifts', vm.slots);
 				});
 			}
-			
+
 			function getHolidays(physicianId, cb) {
 				Holidays.holidayByDocId({
 					docId: physicianId
@@ -76,8 +87,8 @@
 					socket.syncUpdates('appointment', vm.holidays);
 				});
 			}
-			
-			
+
+
 			function setShifts() {
 				var cnt = 1;
 				$scope.shift = {};

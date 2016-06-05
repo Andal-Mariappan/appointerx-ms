@@ -29,7 +29,7 @@
             </li>
             <li class="bold" ng-class="{active:$state.current.name === 'appointment'}"><a ui-sref="appointment" class="waves-effect waves-cyan"><i class="mdi-editor-insert-invitation"></i> Appointments</a>
             </li>
-            <li class="bold" ng-class="{active:$state.current.name === 'patient'}"><a ui-sref="patient" class="waves-effect waves-cyan"><i class="mdi-editor-insert-invitation"></i> Patients</a>
+            <li class="bold" ng-class="{active:$state.current.name === 'patient'}" ng-if="side.isAdmin===true || side.getCurrentUser().role==='physician'"><a ui-sref="patient" class="waves-effect waves-cyan"><i class="mdi-editor-insert-invitation"></i> Patients</a>
             </li>
             
             <li class="bold" ng-if="side.isAdmin===true" ng-class="{active:$state.current.name === 'physician'}"><a ui-sref="physician" class="waves-effect waves-cyan"><i class="mdi-action-note-add"></i> Physicians</a>
@@ -37,6 +37,8 @@
             <li class="bold" ng-if="side.isAdmin===true || side.getCurrentUser().role==='physician'" ng-class="{active:$state.current.name === 'shifts'}"><a ui-sref="shifts" class="waves-effect waves-cyan"><i class="mdi-action-note-add"></i> Shifts</a>
             </li>
             <li class="bold" ng-if="side.isAdmin===true || side.getCurrentUser().role==='physician'" ng-class="{active:$state.current.name === 'holidays'}"><a ui-sref="holidays" class="waves-effect waves-cyan"><i class="mdi-action-note-add"></i> Holidays</a>
+            </li>
+            <li class="bold"  ng-class="{active:$state.current.name === 'guide'}"><a ui-sref="guide" class="waves-effect waves-cyan"><i class="mdi-action-note-add"></i> Help/Guide</a>
             </li>
             <!--<li ng-show="side.isLoggedIn()"><a ui-sref="settings"><i class="mdi-action-settings"></i> Password</a>
             </li>-->

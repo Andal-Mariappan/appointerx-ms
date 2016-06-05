@@ -19,8 +19,8 @@
 			<ul class="collection with-header">
 				<li class="collection-item"> <strong>HighLights</strong>
 					<ul class="collection">
-						<li class="collection-item">Real Time appointments information with Socket.IO</li>
-						<li class="collection-item">Role Management, Doctor/Physician,Patient, Super Admin </li>
+						<li class="collection-item"><b>Real Time appointments information with Socket.IO</b></li>
+						<!-- <li class="collection-item">Role Management, Doctor/Physician,Patient, Super Admin </li>
 						<li class="collection-item">Doctor/Physician Login, Patient Login and Admin Login</li>
 						<li class="collection-item">Doctor/Physician can add his Business hours </li>
 						<li class="collection-item">Doctor/Physician can add his Personal holidays </li>
@@ -30,12 +30,36 @@
 						<li class="collection-item">Doctor wise calendar view</li>
 						<li class="collection-item">Patient can make an Appointment by selectig doctor</li>
 						<li class="collection-item">Patient can not edit another patient's appointment</li>
+
+						<li class="collection-item">Sendgrid mail intergrated with nodemailer package</li>
 						<li class="collection-item">Materialize datepicker with month and year selectable</li>
 						<li class="collection-item">Babel javascript</li>
 						<li class="collection-item">Can be extended to full Admin panel</li>
-						<li class="collection-item">Socket.IO with live data broadcasting</li>
+						<li class="collection-item">Socket.IO with live data broadcasting</li> -->
+						<li class="collection-item">1) Patient gets registered as patient role from signup page with name,email,password and mobile number mandatory.</li>
+<li class="collection-item">2) Physician gets registered as physician role from signup page with NIP, City,State,Zip will need to add as practice details.</li>
+<li class="collection-item">3) NIP and all practice details will be mandatory for physician.</li>
+<li class="collection-item">4) Once he/she logged in as Patient then they will see home page with different icons, there will be make an appointment icon will be there will will redirect them to main calendar manager app.</li>
+<li class="collection-item">5) Patient can select physician from physician list, and calendar will get filter on the base of selection.</li>
+<li class="collection-item">6) Patient/Physician will have his/her profile page, from there they can change mobile number/email address/name/Address etc.</li>
+<li class="collection-item">7) Physician can set his holiday date for him and also he can set his time and date of unavailability.</li>
+<li class="collection-item">8) Physician can also set his <b>practice duration</b> like morning 10 AM to 7 PM, so patient can only select this time frame for appointment.</li>
+<li class="collection-item">9) Patient can cancel/delete his/her appointment also and they can provide reason to cancel/delete that appointment.</li>
+<li class="collection-item">10) Patient can not delete any other patients appointment from selected physicians calendar.</li>
+<li class="collection-item">11) Admin can change physicians details or make them Active/In-Active.</li>
+<li class="collection-item">12) Admin can see Physician listing page but no one else can see Physician listing page.</li>
+<li class="collection-item">13) Admin can also view Physician wise appointment in listing page as well as calendar view.</li>
+<li class="collection-item">14) Patient can view appointment of other patient but that will be read only, or He can not see in right side form.</li>
+<li class="collection-item">15) Forget password function will send mail to physician or patient and then from mail they will be directly get redirected to this app page or just give user info password.</li>
+<li class="collection-item">16) Admin will see all the physicians list and from there admin can filter by name , and select physician to view all his appointments.</li>
+<li class="collection-item">17) Patient should also have searchable physician by name instead of long physician list in dropdown.</li>
 					</ul>
 				</li>
+				<img src="http://s33.postimg.org/crwzx69bz/Dashboard.jpg">
+				<img src="http://s33.postimg.org/qe71lrj9b/appointments_card.jpg">
+				<img src="http://s33.postimg.org/qjfe96fy7/doc_wise_cal.jpg">
+				<img src="http://s33.postimg.org/nj356du0v/view_Shifts.jpg">
+				<img src="http://s33.postimg.org/6d7awjuwv/vacation.jpg">
 				<li class="collection-item"> <strong>All Features</strong>
 					<ul class="collection">
 						<ul>
@@ -72,6 +96,15 @@
 						<li class="collection-item">2.MySql http://dev.mysql.com/downloads/mysql/ (Database)</li>
 					</ul>
 				</li>
+			</ul>
+
+			<ul class="collection with-header">
+				<li class="collection-header">
+					<h4>Things to know</h4></li>
+				<li class="collection-item">Dev database connection: server/config/environment/development.js</li>
+				<li class="collection-item">Production Database : Dev database connection: server/config/environment/production.js</li>
+				<li class="collection-item">Seed data on/off: server/config/environment/index.js seedDB: false,FORCE_DB_SYNC: "false"</li>
+				<li class="collection-item">Seed data entry: server/config/seed.js</li>
 			</ul>
 
 			<ul class="collection with-header">
