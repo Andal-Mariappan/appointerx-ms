@@ -23,6 +23,12 @@
         socket.unsyncUpdates("user");
       });
 
+
+    $scope.viewDetails=function(patient)
+    {
+      
+    }
+
     }
   }
 

@@ -71,8 +71,10 @@ export function index(req, res) {
 				'email',
         'mobile',
         'gender',
-        'birthdate'
+        'birthdate',
+        'createdAt'
 			]
+      
 		})
     .then(respondWithResult(res))
     .catch(handleError(res));
