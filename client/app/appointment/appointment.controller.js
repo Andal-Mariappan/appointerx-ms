@@ -50,6 +50,13 @@
             socket.syncUpdates('appointment', vm.appointments);
           });
         }
+        else {
+          AppointmentService.query().$promise.then(function (response) {
+            console.log(response)
+            vm.appointments = response;
+            socket.syncUpdates('appointment', vm.appointments);
+          });
+        }
 
       });
     }

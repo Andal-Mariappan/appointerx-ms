@@ -10,18 +10,24 @@
     </div>
     <div class="container">
       <div class="row">
-        <div class="col s12 m12 l7">
+        <div class="col s12 m12 l5">
           <h5 class="breadcrumbs-title">Patients</h5>
           <ol class="breadcrumbs">
             <li><a href="/">Home</a></li>
             <li class="active">Patients</li>
           </ol>
         </div>
-        <div class="input-field col s5">
+        <div class="input-field col s6">
           <i ng-class="{'active':focus}" class="mdi-action-search prefix"></i>
           <input id="search" type="text" ng-model="search_events">
           <label for="search" ng-class="{'active':focus}">Search by name</label>
         </div>
+        <div class="col s1 breadcrumbs-title right">
+        <button type="button" class="btn-floating btn-small waves-effect waves-light" data-position="bottom" data-delay="50" data-tooltip="Export to csv"
+          ng-click="exportCSV()" tooltipped>
+          <i class="material-icons">file_download</i>
+     </button>
+      </div>
       </div>
     </div>
   </div>
@@ -35,7 +41,7 @@
           <section class="plans-container" id="plans">
             <div id="striped-table">
               <div class="row">
-                <div class="col s12 m6 l12">
+                <div class="col s12 m12 l12">
                   <table class="striped">
                     <thead>
                       <tr>
@@ -125,6 +131,9 @@
     </div>
   </div>
   <!--end container-->
-
+<form target="_blank" id="frmSubmit" style="display:none;" enctype='application/json' method="post">
+    <input type='hidden' name='_csrf' value=token></input>
+    <textarea id="data" name="data"></textarea>
+  </form>
 </section>
 <!-- END CONTENT -->

@@ -33,9 +33,9 @@
                                         <div class="input-field col s12">
                                             <i ng-class="{'active':focus}" class="mdi-editor-mode-edit prefix"></i>
                                             <div class="select-wrapper">
-                                            <select id="filter_physician" select-2-custom ng-model='newEvent.patient' ng-change="onChange()" aria-placeholder="select 3">
+                                            <select id="filter_patient" select-2-custom ng-model='newEvent.PatientId' ng-change="onChange()" aria-placeholder="select 3">
                                                 <option selected disabled>Search by name</option>
-                                                <option ng-repeat="p in patients track by p._id"  value="{{p}}">{{p.first_name}} {{p.last_name}}
+                                                <option ng-repeat="p in patients track by p._id"  value="{{p._id}}">{{p.first_name}} {{p.last_name}}
                                                 </option>
                                             </select>
                                             </div>

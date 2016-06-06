@@ -18,18 +18,21 @@ angular.module('eventx').directive('fullCalendar', function ($log, $timeout, $co
     });
     
     var alertOnEventClick = function (date, jsEvent, view) {
-      console.log(date,scope.currentUser);
+      
       if (date.isHoliday) { return false; }
       if (date.url) { return false; }
       if (date.PatientId != scope.currentUser._id && scope.currentUser.role==='patient') {
         Materialize.toast("You can't view other's details.", 2000, '', function () { });
         return false;
       }
-      $('.event-collapse').sideNav('show');
-      scope.focus = true;
+      
       $timeout(function () {
+        $('.event-collapse').sideNav('show');
+        scope.focus = true;
         scope.newEvent = angular.copy(date);
         scope.newEvent.className = date.className.join(' ');
+        scope.newEvent.PatientId=date.PatientId.toString();
+        console.log(scope.newEvent.PatientId,date.PatientId);  
         scope.eve = {
           name: date.title,
           start: moment(date.start).format('MMM, D dddd'),
@@ -112,10 +115,13 @@ angular.module('eventx').directive('fullCalendar', function ($log, $timeout, $co
 
         },
         select: function (start, end, allDay) {
+          console.log(scope.newEvent);
           scope.newEvent = {};
-           scope.newEvent.icon = 'mdi-action-event';
+          $("#filter_patient").select2("val", "");
+          scope.newEvent.icon = 'mdi-action-event';
           $timeout(function () {
             $('.event-collapse').sideNav('show');
+            $("#filter_patient").select2("val", "");
             scope.focus = true;
             scope.eve = {
               start: moment(start).format('MMM, D dddd'),
@@ -126,6 +132,7 @@ angular.module('eventx').directive('fullCalendar', function ($log, $timeout, $co
               scope.newEvent.end = end, //moment(end).format('DD MMM YYYY hh:mm a');
               scope.newEvent.allday = allDay;
           });
+          console.log(scope.newEvent);
           calendar.fullCalendar('unselect');
         },
         eventSources: [

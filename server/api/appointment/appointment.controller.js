@@ -66,9 +66,21 @@ function handleError(res, statusCode) {
 // Gets a list of Appointments
 export function index(req, res) {
 	Appointment.findAll({
+		where: {
+				isHoliday:false
+			},
 			include: [{
 				model: User,
-				attributes: ['first_name', '_id']
+				as: 'creator',
+				attributes: ['first_name', 'last_name', 'email', 'mobile','_id']
+			}, {
+				model: User,
+				as: 'Patient',
+				attributes: ['first_name', 'last_name', 'email', 'mobile', 'gender', '_id']
+			}, {
+				model: User,
+				as: 'Physician',
+				attributes: ['first_name', 'last_name', 'email', 'mobile', 'gender','npi','city','country', '_id']
 			}]
 		})
 		.then(respondWithResult(res))

@@ -6,6 +6,7 @@ class SidebarController {
     this.isAdmin = Auth.isAdmin;
     this.getCurrentUser = Auth.getCurrentUser;
     $rootScope.$state = $state;
+    console.log(this.isAdmin());
     $timeout(function() {
       $('.event-collapse').sideNav('hide');
       $(".sidebar-collapse").sideNav();

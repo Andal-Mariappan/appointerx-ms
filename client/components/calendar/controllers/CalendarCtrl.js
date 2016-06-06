@@ -22,6 +22,8 @@ angular.module('eventx').controller('CalendarCtrl', function ($scope, $log, $tim
 	});
 
 	User.getPatients().$promise.then(response => {
+		console.log(_.map(response,
+			_.partialRight(_.pick, "_id", "first_name")));
 		$scope.patients = response;
 	});
 
@@ -32,10 +34,13 @@ angular.module('eventx').controller('CalendarCtrl', function ($scope, $log, $tim
 
 
 	$scope.onChange = function () {
-		var selectedPatient = JSON.parse($scope.newEvent.patient);
-		$scope.newEvent.title = selectedPatient.first_name + " " + selectedPatient.last_name;
-		$scope.newEvent.PatientId = selectedPatient._id;
-		console.log($scope.newEvent);
+		var selectedPatient = _.find($scope.patients, function (p) {
+			return p._id.toString() == $scope.newEvent.PatientId
+		});
+		if (selectedPatient) {
+			$scope.newEvent.title = selectedPatient.first_name + " " + selectedPatient.last_name;
+			$scope.newEvent.PatientId = selectedPatient._id.toString();
+		}
 	}
 
 	$scope.addAppointment = function (form) {
